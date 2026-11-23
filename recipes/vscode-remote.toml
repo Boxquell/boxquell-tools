@@ -1,6 +1,7 @@
 name = "VS Code Remote"
 category = "ide"
 description = "Opens the network for VS Code's Remote-SSH server and its extensions"
+os = ["debian", "ubuntu"]
 allow = [
     "update.code.visualstudio.com",
     "vscode.download.prss.microsoft.com",

@@ -1,7 +1,7 @@
 name = "Docker"
 category = "tool"
 description = "Docker Engine with Buildx and Compose; containers use the sandbox's network (`--network host`)"
-install_allow = ["deb.debian.org", "security.debian.org", "download.docker.com"]
+install_allow = ["@packages", "download.docker.com"]
 allow = ["registry-1.docker.io", "auth.docker.io", "production.cloudfront.docker.com"]
 install = '''
 sudo apt-get update -q

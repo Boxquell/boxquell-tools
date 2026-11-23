@@ -1,6 +1,7 @@
 name = "code-server"
 category = "ide"
 description = "VS Code in the browser, served from the sandbox on port 8080"
+os = ["debian", "ubuntu"]
 install_allow = ["github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
 allow = ["open-vsx.org", "openvsxorg.blob.core.windows.net"]
 ports = [8080]

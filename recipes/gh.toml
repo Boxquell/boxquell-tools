@@ -1,7 +1,8 @@
 name = "GitHub CLI"
 category = "tool"
 description = "`gh`, with github.com allowed for git and the API"
-install_allow = ["deb.debian.org", "security.debian.org"]
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
 allow = ["github.com", "api.github.com"]
 secrets = ["github"]
 install = '''

@@ -1,7 +1,8 @@
 name = "C/C++ build tools"
 category = "tool"
 description = "gcc, g++, make and pkg-config from Debian"
-install_allow = ["deb.debian.org", "security.debian.org"]
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
 install = '''
 sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends build-essential pkg-config

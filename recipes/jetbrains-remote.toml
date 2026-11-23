@@ -1,6 +1,7 @@
 name = "JetBrains Remote"
 category = "ide"
 description = "Opens the network for JetBrains Gateway to install its IDE backend and plugins"
+os = ["debian", "ubuntu"]
 allow = [
     "download.jetbrains.com",
     "download-cdn.jetbrains.com",
