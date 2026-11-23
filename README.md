@@ -27,6 +27,7 @@ boxquell repo update tools          # fetch the latest recipes
 | `gh` | GitHub CLI, with github.com allowed for git and the API |
 | `git` | git with Git LFS |
 | `glab` | GitLab CLI, with gitlab.com allowed for git and the API |
+| `homebrew` | Homebrew, the package manager (`brew`), in /home/linuxbrew/.linuxbrew |
 | `helm` | Helm, the Kubernetes package manager |
 | `imagemagick` | ImageMagick command-line tools (`convert`, `identify`) |
 | `jira-cli` | Jira CLI (`jira`) for Jira Cloud |

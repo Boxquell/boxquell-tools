@@ -1,0 +1,26 @@
+name = "Homebrew"
+category = "tool"
+description = "Homebrew, the package manager (`brew`), in /home/linuxbrew/.linuxbrew"
+icon = "homebrew.svg"
+icon_color = "#FBB040"
+install_allow = ["@packages", "raw.githubusercontent.com", "github.com", "formulae.brew.sh", "ghcr.io", "pkg-containers.githubusercontent.com"]
+allow = ["formulae.brew.sh", "ghcr.io", "pkg-containers.githubusercontent.com"]
+install = '''
+# Homebrew's requirements on Debian (https://docs.brew.sh/Homebrew-on-Linux).
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends build-essential procps curl file git ca-certificates
+
+# The official installer; NONINTERACTIVE=1 skips its prompts. It creates
+# /home/linuxbrew/.linuxbrew with sudo and gives it to the current user.
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# [env] cannot run `brew shellenv`, so every login shell does it. Debian's
+# /etc/profile skips /etc/profile.d files with other characters than letters,
+# digits, `.`, `_` and `-` in their name.
+printf '%s\n' '[ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' | sudo tee /etc/profile.d/homebrew.sh >/dev/null
+/home/linuxbrew/.linuxbrew/bin/brew --version
+'''
+
+[env]
+HOMEBREW_NO_ANALYTICS = "1"
+HOMEBREW_NO_ENV_HINTS = "1"
