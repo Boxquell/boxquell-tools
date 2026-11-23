@@ -2,6 +2,7 @@ name = "GitHub CLI"
 category = "tool"
 description = "`gh`, with github.com allowed for git and the API"
 icon = "github.svg"
+icon_color = "#181717"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 allow = ["github.com", "api.github.com"]

@@ -2,6 +2,7 @@ name = "GitLab CLI"
 category = "tool"
 description = "`glab`, with gitlab.com allowed for git and the API (set GITLAB_TOKEN with a `gitlab` secret)"
 icon = "gitlab.svg"
+icon_color = "#FC6D26"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages", "gitlab.com", "*.gitlab.com", "*.googleapis.com"]
 allow = ["gitlab.com"]

@@ -2,6 +2,7 @@ name = "Git"
 category = "tool"
 description = "git with Git LFS from Debian"
 icon = "git.svg"
+icon_color = "#F03C2E"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 install = '''

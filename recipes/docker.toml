@@ -2,6 +2,7 @@ name = "Docker"
 category = "tool"
 description = "Docker Engine with Buildx and Compose; containers use the sandbox's network (`--network host`)"
 icon = "docker.svg"
+icon_color = "#2496ED"
 install_allow = ["@packages", "download.docker.com"]
 allow = ["registry-1.docker.io", "auth.docker.io", "production.cloudfront.docker.com"]
 install = '''

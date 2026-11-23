@@ -2,6 +2,7 @@ name = "Jira CLI"
 category = "tool"
 description = "`jira` (ankitpokhrel/jira-cli) for Jira Cloud; allow your site with a `jira` secret that sets JIRA_API_TOKEN"
 icon = "jira.svg"
+icon_color = "#0052CC"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages", "github.com", "*.githubusercontent.com"]
 allow = ["*.atlassian.net", "api.atlassian.com"]

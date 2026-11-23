@@ -2,6 +2,7 @@ name = "Bitbucket CLI"
 category = "tool"
 description = "`bkt` (avivsinai/bitbucket-cli) for Bitbucket Cloud; allow your workspace with a `bitbucket` secret that sets BKT_TOKEN"
 icon = "bitbucket.svg"
+icon_color = "#0052CC"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages", "github.com", "*.githubusercontent.com"]
 allow = ["bitbucket.org", "*.bitbucket.org", "api.bitbucket.org"]
