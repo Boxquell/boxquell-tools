@@ -1,0 +1,22 @@
+name = "GitLab CLI"
+category = "tool"
+description = "`glab`, with gitlab.com allowed for git and the API (set GITLAB_TOKEN with a `gitlab` secret)"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "gitlab.com", "*.gitlab.com", "*.googleapis.com"]
+allow = ["gitlab.com"]
+secrets = ["gitlab"]
+install = '''
+# Official release binary from the glab project; the system package is older.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl git
+arch=$(dpkg --print-architecture)
+tag=$(curl -fsSL https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/releases/permalink/latest | sed -n 's/.*"tag_name":"\([^"]*\)".*/\1/p')
+curl -fsSL "https://gitlab.com/gitlab-org/cli/-/releases/$tag/downloads/glab_${tag#v}_linux_${arch}.tar.gz" -o /tmp/glab.tar.gz
+tar -xzf /tmp/glab.tar.gz -C /tmp bin/glab
+sudo install -m 0755 /tmp/bin/glab /usr/local/bin/glab
+rm -rf /tmp/glab.tar.gz /tmp/bin
+glab --version
+'''
+
+[env]
+GITLAB_HOST = "gitlab.com"

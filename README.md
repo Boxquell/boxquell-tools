@@ -14,9 +14,12 @@ boxquell repo update tools          # fetch the latest recipes
 |---|---|
 | `build-essential` | gcc, g++, make and pkg-config from Debian |
 | `composer` | Composer, the dependency manager for PHP (installs PHP from the languages repository) |
+| `confluence-cli` | Confluence CLI (`confluence`, from npm; installs Node.js from the languages repository) |
 | `docker` | Docker Engine with Buildx and Compose (see below) |
 | `gh` | GitHub CLI, with github.com allowed for git and the API |
 | `git` | git with Git LFS |
+| `glab` | GitLab CLI, with gitlab.com allowed for git and the API |
+| `jira-cli` | Jira CLI (`jira`) for Jira Cloud |
 | `jq` | Command-line JSON processor |
 | `ripgrep` | Fast recursive search (`rg`) |
 

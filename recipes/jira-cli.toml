@@ -1,0 +1,25 @@
+name = "Jira CLI"
+category = "tool"
+description = "`jira` (ankitpokhrel/jira-cli) for Jira Cloud; allow your site with a `jira` secret that sets JIRA_API_TOKEN"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "github.com", "*.githubusercontent.com"]
+allow = ["*.atlassian.net", "api.atlassian.com"]
+secrets = ["jira"]
+install = '''
+# Release binary from GitHub. Log in with `jira init` or set JIRA_API_TOKEN (and JIRA_AUTH_TYPE=basic).
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+case "$(dpkg --print-architecture)" in
+  amd64) arch=x86_64 ;;
+  arm64) arch=arm64 ;;
+  *) echo "unsupported architecture" >&2; exit 1 ;;
+esac
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/ankitpokhrel/jira-cli/releases/latest)
+tag=${tag##*/}
+curl -fsSL "https://github.com/ankitpokhrel/jira-cli/releases/download/$tag/jira_${tag#v}_linux_${arch}.tar.gz" -o /tmp/jira.tar.gz
+mkdir -p /tmp/jira-cli
+tar -xzf /tmp/jira.tar.gz -C /tmp/jira-cli
+sudo install -m 0755 "$(find /tmp/jira-cli -name jira -type f | head -n 1)" /usr/local/bin/jira
+rm -rf /tmp/jira.tar.gz /tmp/jira-cli
+jira version
+'''

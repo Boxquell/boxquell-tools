@@ -1,0 +1,13 @@
+name = "Confluence CLI"
+category = "tool"
+description = "`confluence` (pchuri/confluence-cli) for Confluence Cloud; allow your site with a `confluence` secret that sets CONFLUENCE_API_TOKEN"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["*.atlassian.net", "api.atlassian.com"]
+secrets = ["confluence"]
+install = '''
+# Installed with npm; set CONFLUENCE_DOMAIN, CONFLUENCE_EMAIL and CONFLUENCE_API_TOKEN, or run `confluence init`.
+sudo npm install -g confluence-cli
+confluence --version
+'''
