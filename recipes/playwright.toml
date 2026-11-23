@@ -2,6 +2,7 @@ name = "Playwright"
 category = "tool"
 description = "Playwright (`playwright`) with headless Chromium and its system libraries, for browser tests"
 icon = "playwright.svg"
+icon_color = "#2EAD33"
 os = ["debian", "ubuntu"]
 requires = ["node"]
 install_allow = ["@packages", "registry.npmjs.org", "cdn.playwright.dev", "playwright.download.prss.microsoft.com", "playwright.azureedge.net", "storage.googleapis.com"]
