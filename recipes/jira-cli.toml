@@ -41,3 +41,39 @@ help = "basic (the default) sends login and token; bearer sends a personal acces
 kind = "choice"
 options = ["basic", "bearer", "mtls"]
 placeholder = "basic"
+
+# A first setup from the Config tab: writes ~/.config/.jira/.config.yml.
+[[action]]
+label = "Set up Jira"
+help = "Writes the Jira CLI's configuration: your site, your account, a default project and its board. Store the token first; the setup signs in with it."
+command = "jira init --installation {installation} --server {server} --login {login} --auth-type {auth} --project {project} --board {board} --force"
+
+[[action.input]]
+name = "server"
+label = "Site"
+placeholder = "https://example.atlassian.net"
+
+[[action.input]]
+name = "login"
+label = "Account e-mail or user name"
+placeholder = "me@example.com"
+
+[[action.input]]
+name = "project"
+label = "Default project key"
+placeholder = "ABC"
+
+[[action.input]]
+name = "board"
+label = "Board of that project"
+placeholder = "ABC board"
+
+[[action.input]]
+name = "installation"
+label = "cloud or local"
+default = "cloud"
+
+[[action.input]]
+name = "auth"
+label = "basic, bearer or mtls"
+default = "basic"
