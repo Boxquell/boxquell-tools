@@ -1,0 +1,19 @@
+name = "AWS CLI"
+category = "tool"
+description = "AWS CLI v2 (`aws`), installed system-wide with AWS's own installer"
+icon = "cloud.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["awscli.amazonaws.com", "@packages"]
+# AWS has a service host per region (s3.eu-west-1.amazonaws.com, ...), so the documented
+# wildcards are used; *.api.aws covers the newer dual-stack endpoints.
+allow = ["*.amazonaws.com", "*.api.aws"]
+# No secret: AWS signs every request (SigV4) with the key itself, so a placeholder cannot be
+# swapped in by the gateway. Pass credentials with `boxquell set <box> --env AWS_ACCESS_KEY_ID=...`
+# (and AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN), preferably short-lived session credentials.
+install = '''
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip less groff-base
+curl -fsSL https://awscli.amazonaws.com/v2/install.sh | sudo bash -s -- --system
+aws --version
+'''

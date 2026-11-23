@@ -1,0 +1,18 @@
+name = "kubectl"
+category = "tool"
+description = "kubectl, the Kubernetes command-line client (latest stable release, checksum verified)"
+icon = "kubernetes.svg"
+icon_color = "#326CE5"
+os = ["debian", "ubuntu"]
+install_allow = ["dl.k8s.io", "cdn.dl.k8s.io", "@packages"]
+# Cluster API servers differ per user: allow yours with `boxquell allow <box> <host>`.
+install = '''
+case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+cd "$(mktemp -d)"
+version=$(curl -fsSL https://dl.k8s.io/release/stable.txt)
+curl -fsSLO "https://dl.k8s.io/release/$version/bin/linux/$arch/kubectl"
+curl -fsSLO "https://dl.k8s.io/release/$version/bin/linux/$arch/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+'''

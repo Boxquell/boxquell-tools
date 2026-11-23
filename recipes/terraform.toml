@@ -1,0 +1,20 @@
+name = "Terraform"
+category = "tool"
+description = "Terraform from HashiCorp's apt repository"
+icon = "terraform.svg"
+icon_color = "#844FBA"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "apt.releases.hashicorp.com"]
+# The registry and the release host that serves HashiCorp's providers; add the hosts of other providers' APIs yourself.
+allow = ["registry.terraform.io", "releases.hashicorp.com", "app.terraform.io"]
+# HCP Terraform takes a bearer token: name the variable TF_TOKEN_app_terraform_io and let it reach app.terraform.io.
+secrets = ["terraform"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gnupg
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor --yes -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(. /etc/os-release && echo "${VERSION_CODENAME}") main" | sudo tee /etc/apt/sources.list.d/hashicorp.list >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends terraform
+terraform version | head -n1
+'''

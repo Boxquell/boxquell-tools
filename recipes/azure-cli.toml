@@ -1,0 +1,21 @@
+name = "Azure CLI"
+category = "tool"
+description = "Azure CLI (`az`) from Microsoft's apt repository"
+icon = "cloud.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "packages.microsoft.com"]
+allow = ["login.microsoftonline.com", "management.azure.com", "graph.microsoft.com"]
+# No secret: a service principal's secret goes to the token endpoint in a request body, where the
+# gateway cannot swap it. Use `az login --use-device-code`, or pass AZURE_* values with `boxquell set <box> --env`.
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends apt-transport-https ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg >/dev/null
+sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
+printf '%s\n' "Types: deb" "URIs: https://packages.microsoft.com/repos/azure-cli/" "Suites: $(lsb_release -cs)" "Components: main" "Architectures: $(dpkg --print-architecture)" "Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends azure-cli
+az version --query '"azure-cli"' -o tsv
+'''

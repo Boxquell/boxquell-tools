@@ -1,0 +1,21 @@
+name = "Google Cloud CLI"
+category = "tool"
+description = "Google Cloud CLI (`gcloud`, `gsutil`, `bq`) from Google's apt repository"
+icon = "googlecloud.svg"
+icon_color = "#4285F4"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "packages.cloud.google.com"]
+# Google serves every API from a host under googleapis.com (storage, compute, ...), hence the wildcard.
+allow = ["*.googleapis.com", "accounts.google.com"]
+# Requests carry a bearer token, so a host secret works: name the variable CLOUDSDK_AUTH_ACCESS_TOKEN
+# and let it reach *.googleapis.com. Access tokens last an hour; `gcloud auth login` works as well.
+secrets = ["gcloud"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates gnupg curl
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor --yes -o /usr/share/keyrings/cloud.google.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends google-cloud-cli
+gcloud --version | head -n1
+'''

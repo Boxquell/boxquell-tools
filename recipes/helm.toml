@@ -1,0 +1,22 @@
+name = "Helm"
+category = "tool"
+description = "Helm, the Kubernetes package manager, from the Helm project's apt repository"
+icon = "helm.svg"
+icon_color = "#0F1689"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "packages.buildkite.com"]
+# Chart repositories and OCI registries differ per project: allow the ones you use with `boxquell allow <box> <host>`.
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gpg
+# The key's fingerprint is the one the Helm documentation lists.
+key_id=DDF78C3E6EBB2D2CC223C95C62BA89D07698DBC6
+curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey -o /tmp/helm.asc
+[ "$(gpg --show-keys --with-colons /tmp/helm.asc | awk -F: '$1=="fpr"{print $10; exit}')" = "$key_id" ] || { echo "unexpected Helm repository key" >&2; exit 1; }
+sudo install -m 0644 -Dt /etc/apt/keyrings/ /tmp/helm.asc
+rm -f /tmp/helm.asc
+printf '%s\n' "Types: deb" "URIs: https://packages.buildkite.com/helm-linux/helm-debian/any/" "Suites: any" "Components: main" "Signed-By: /etc/apt/keyrings/helm.asc" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.sources >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends helm
+helm version --short
+'''
