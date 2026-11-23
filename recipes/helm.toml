@@ -20,3 +20,34 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends helm
 helm version --short
 '''
+
+[[config]]
+env = "HELM_NAMESPACE"
+label = "Namespace"
+help = "Namespace that Helm works in unless told otherwise."
+
+[[config]]
+env = "HELM_KUBECONTEXT"
+label = "Kube context"
+help = "Name of the kubeconfig context to use."
+
+[[config]]
+env = "HELM_DEBUG"
+label = "Debug output"
+help = "Run Helm in debug mode."
+kind = "switch"
+on = "true"
+
+[[config]]
+env = "HELM_MAX_HISTORY"
+label = "Release history"
+help = "How many revisions of a release are kept."
+kind = "number"
+
+[[config]]
+env = "HELM_COLOR"
+label = "Color"
+help = "When Helm colors its output."
+kind = "choice"
+options = ["never", "always", "auto"]
+placeholder = "never"

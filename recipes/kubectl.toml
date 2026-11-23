@@ -16,3 +16,21 @@ echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 kubectl version --client
 '''
+
+[[config]]
+env = "KUBECONFIG"
+label = "Kubeconfig file"
+help = "Path of the file with cluster access, or several separated by colons."
+placeholder = "~/.kube/config"
+
+[[config]]
+env = "KUBE_EDITOR"
+label = "Editor"
+help = "Program that kubectl edit opens."
+placeholder = "vi"
+
+[[config]]
+env = "KUBECTL_EXTERNAL_DIFF"
+label = "Diff program"
+help = "Program that kubectl diff uses."
+placeholder = "diff"

@@ -12,3 +12,41 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends gh
 gh --version
 '''
+
+[[credential]]
+name = "github"
+label = "GitHub access token"
+help = "A personal access token with the scopes you need."
+url = "https://github.com/settings/tokens"
+
+[[config]]
+env = "GH_HOST"
+label = "GitHub host"
+help = "The GitHub hostname to use when none can be inferred, for GitHub Enterprise."
+placeholder = "github.com"
+
+[[config]]
+env = "GH_REPO"
+label = "Default repository"
+help = "Repository for commands outside a clone, as OWNER/REPO."
+placeholder = "owner/repo"
+
+[[config]]
+env = "GH_PAGER"
+label = "Pager"
+help = "Program that pages long output."
+placeholder = "less"
+
+[[config]]
+env = "GH_PROMPT_DISABLED"
+label = "No prompts"
+help = "Never ask interactive questions."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "GH_NO_UPDATE_NOTIFIER"
+label = "No update notices"
+help = "Do not tell about new versions."
+kind = "switch"
+on = "1"

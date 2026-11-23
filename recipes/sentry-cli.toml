@@ -14,3 +14,35 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 curl -fsSL https://sentry.io/get-cli/ | sudo env INSTALL_DIR=/usr/local/bin sh
 sentry-cli --version
 '''
+
+[[credential]]
+name = "sentry"
+label = "Sentry auth token"
+help = "An auth token with the scopes for releases and source maps."
+url = "https://sentry.io/settings/account/api/auth-tokens/"
+hosts = ["sentry.io"]
+env = ["SENTRY_AUTH_TOKEN"]
+
+[[config]]
+env = "SENTRY_ORG"
+label = "Organization"
+help = "Organization slug that commands use."
+
+[[config]]
+env = "SENTRY_PROJECT"
+label = "Project"
+help = "Project slug that commands use."
+
+[[config]]
+env = "SENTRY_URL"
+label = "Sentry URL"
+help = "Address of the Sentry server, for a self-hosted one."
+placeholder = "https://sentry.io"
+
+[[config]]
+env = "SENTRY_LOG_LEVEL"
+label = "Log level"
+help = "How much the CLI logs."
+kind = "choice"
+options = ["trace", "debug", "info", "warn", "error"]
+placeholder = "warn"

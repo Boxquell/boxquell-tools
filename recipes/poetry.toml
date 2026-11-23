@@ -15,3 +15,40 @@ curl -sSL https://install.python-poetry.org | sudo env POETRY_HOME=/opt/poetry "
 sudo ln -sf /opt/poetry/bin/poetry /usr/local/bin/poetry
 poetry --version
 '''
+
+[[config]]
+env = "POETRY_VIRTUALENVS_IN_PROJECT"
+label = "Virtualenv in project"
+help = "Create the virtualenv in a .venv folder of the project."
+kind = "choice"
+options = ["true", "false"]
+
+[[config]]
+env = "POETRY_VIRTUALENVS_CREATE"
+label = "Create virtualenvs"
+help = "Whether Poetry makes a virtualenv when none is active."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"
+
+[[config]]
+env = "POETRY_INSTALLER_PARALLEL"
+label = "Parallel install"
+help = "Install packages in parallel."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"
+
+[[config]]
+env = "POETRY_INSTALLER_MAX_WORKERS"
+label = "Install workers"
+help = "Most packages installed at once."
+kind = "number"
+placeholder = "CPU cores + 4"
+
+[[config]]
+env = "POETRY_REQUESTS_MAX_RETRIES"
+label = "Download retries"
+help = "How often a failed download is tried again."
+kind = "number"
+placeholder = "0"

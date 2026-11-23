@@ -14,3 +14,11 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 sudo gem install rails --no-document
 rails --version
 '''
+
+[[config]]
+env = "RAILS_ENV"
+label = "Environment"
+help = "Which environment Rails runs in."
+kind = "choice"
+options = ["development", "test", "production"]
+placeholder = "development"

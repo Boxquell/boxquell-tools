@@ -21,3 +21,10 @@ curl -fsSL "$base/stripe-linux-checksums.txt" | grep " $file\$" | sha256sum -c -
 sudo tar -xzf "$file" -C /usr/local/bin stripe --no-same-owner
 stripe --version
 '''
+
+[[config]]
+env = "STRIPE_CLI_TELEMETRY_OPTOUT"
+label = "No usage data"
+help = "Do not send usage data to Stripe."
+kind = "switch"
+on = "1"

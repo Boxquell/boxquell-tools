@@ -18,3 +18,24 @@ playwright --version
 [env]
 PLAYWRIGHT_BROWSERS_PATH = "/usr/local/share/playwright"
 NODE_PATH = "/usr/local/lib/node_modules"
+
+[[config]]
+env = "DEBUG"
+label = "Debug logs"
+help = "Playwright logs to turn on."
+options = ["pw:api", "pw:browser", "pw:protocol"]
+
+[[config]]
+env = "PWDEBUG"
+label = "Inspector"
+help = "Open the Playwright Inspector and run tests headed."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "PLAYWRIGHT_HTML_OPEN"
+label = "Open HTML report"
+help = "When the HTML report opens after a test run."
+kind = "choice"
+options = ["always", "never", "on-failure"]
+placeholder = "on-failure"

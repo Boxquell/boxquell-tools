@@ -14,3 +14,30 @@ echo "$expected  composer-setup.php" | sha384sum -c -
 sudo php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer
 composer --version
 '''
+
+[[config]]
+env = "COMPOSER_MEMORY_LIMIT"
+label = "Memory limit"
+help = "PHP memory limit for Composer, for example 2G or -1."
+placeholder = "PHP's own"
+
+[[config]]
+env = "COMPOSER_PROCESS_TIMEOUT"
+label = "Process timeout"
+help = "Seconds a command may run before it is stopped."
+kind = "number"
+placeholder = "300"
+
+[[config]]
+env = "COMPOSER_NO_INTERACTION"
+label = "No prompts"
+help = "Never ask interactive questions."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "COMPOSER_NO_DEV"
+label = "No dev packages"
+help = "Skip packages from require-dev."
+kind = "switch"
+on = "1"

@@ -19,3 +19,33 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends tofu
 tofu version | head -n1
 '''
+
+[[config]]
+env = "TF_LOG"
+label = "Log level"
+help = "How much the log shows."
+kind = "choice"
+options = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "OFF"]
+
+[[config]]
+env = "TF_LOG_PATH"
+label = "Log file"
+help = "File that the log is written to."
+
+[[config]]
+env = "TF_INPUT"
+label = "No prompts"
+help = "Never ask for input."
+kind = "switch"
+on = "0"
+
+[[config]]
+env = "TF_WORKSPACE"
+label = "Workspace"
+help = "Workspace to use."
+placeholder = "default"
+
+[[config]]
+env = "TF_PLUGIN_CACHE_DIR"
+label = "Provider cache"
+help = "Folder where downloaded providers are shared."

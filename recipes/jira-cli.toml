@@ -25,3 +25,19 @@ sudo install -m 0755 "$(find /tmp/jira-cli -name jira -type f | head -n 1)" /usr
 rm -rf /tmp/jira.tar.gz /tmp/jira-cli
 jira version
 '''
+
+[[credential]]
+name = "jira"
+label = "Jira API token"
+help = "A personal access token (set Authentication to bearer on the Config tab)."
+url = "https://id.atlassian.com/manage-profile/security/api-tokens"
+hosts = ["*.atlassian.net", "api.atlassian.com"]
+env = ["JIRA_API_TOKEN"]
+
+[[config]]
+env = "JIRA_AUTH_TYPE"
+label = "Authentication"
+help = "Basic for Jira Cloud, bearer for a personal access token."
+kind = "choice"
+options = ["basic", "bearer", "mtls"]
+placeholder = "basic"

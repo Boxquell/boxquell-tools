@@ -25,3 +25,35 @@ sudo -u postgres createdb -O dev dev
 sudo -u postgres psql -qc "SELECT pg_reload_conf()" >/dev/null
 psql --version
 '''
+
+[[config]]
+env = "PGHOST"
+label = "Host"
+help = "Server that psql connects to."
+placeholder = "the local socket"
+
+[[config]]
+env = "PGPORT"
+label = "Port"
+help = "Port that psql connects to."
+kind = "number"
+placeholder = "5432"
+
+[[config]]
+env = "PGUSER"
+label = "User"
+help = "Role that psql connects as."
+
+[[config]]
+env = "PGDATABASE"
+label = "Database"
+help = "Database that psql opens."
+placeholder = "the user name"
+
+[[config]]
+env = "PGSSLMODE"
+label = "SSL mode"
+help = "Whether psql uses an encrypted connection."
+kind = "choice"
+options = ["disable", "allow", "prefer", "require", "verify-ca", "verify-full"]
+placeholder = "prefer"

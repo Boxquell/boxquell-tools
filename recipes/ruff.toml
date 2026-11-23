@@ -12,3 +12,24 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 curl -LsSf https://astral.sh/ruff/install.sh | sudo env RUFF_UNMANAGED_INSTALL=/usr/local/bin sh
 ruff --version
 '''
+
+[[config]]
+env = "RUFF_OUTPUT_FORMAT"
+label = "Output format"
+help = "How ruff check prints its findings."
+kind = "choice"
+options = ["full", "concise", "json", "json-lines", "junit", "grouped", "github", "gitlab", "pylint", "rdjson", "azure", "sarif"]
+placeholder = "full"
+
+[[config]]
+env = "RUFF_NO_CACHE"
+label = "No cache"
+help = "Do not read the cache."
+kind = "switch"
+on = "true"
+
+[[config]]
+env = "RUFF_CACHE_DIR"
+label = "Cache folder"
+help = "Where ruff keeps its cache."
+placeholder = ".ruff_cache"

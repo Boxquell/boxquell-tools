@@ -10,3 +10,14 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends fzf
 fzf --version
 '''
+
+[[config]]
+env = "FZF_DEFAULT_COMMAND"
+label = "Default command"
+help = "Command that lists the entries when nothing is piped in."
+
+[[config]]
+env = "FZF_DEFAULT_OPTS"
+label = "Default options"
+help = "Options that every fzf run starts with."
+options = ["--height 40% --border", "--layout=reverse"]

@@ -13,3 +13,21 @@ install = '''
 sudo npm install -g vercel
 vercel --version | tail -n1
 '''
+
+[[credential]]
+name = "vercel"
+label = "Vercel access token"
+help = "An access token for your account or team."
+url = "https://vercel.com/account/settings/tokens"
+hosts = ["api.vercel.com"]
+env = ["VERCEL_TOKEN"]
+
+[[config]]
+env = "VERCEL_ORG_ID"
+label = "Team ID"
+help = "Team that the project belongs to, without running vercel link."
+
+[[config]]
+env = "VERCEL_PROJECT_ID"
+label = "Project ID"
+help = "Project that the CLI works on, without running vercel link."

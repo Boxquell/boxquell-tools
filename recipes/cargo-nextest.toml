@@ -13,3 +13,30 @@ mkdir -p "$HOME/.cargo/bin"
 curl -LsSf "https://get.nexte.st/latest/$target" | tar zxf - -C "$HOME/.cargo/bin"
 "$HOME/.cargo/bin/cargo-nextest" nextest --version | head -n1
 '''
+
+[[config]]
+env = "NEXTEST_PROFILE"
+label = "Profile"
+help = "Which profile of the nextest configuration to use."
+placeholder = "default"
+
+[[config]]
+env = "NEXTEST_TEST_THREADS"
+label = "Test threads"
+help = "How many tests run at once."
+kind = "number"
+placeholder = "the number of CPUs"
+
+[[config]]
+env = "NEXTEST_RETRIES"
+label = "Retries"
+help = "How often a failing test is run again."
+kind = "number"
+placeholder = "0"
+
+[[config]]
+env = "NEXTEST_HIDE_PROGRESS_BAR"
+label = "No progress bar"
+help = "Hide the progress bar."
+kind = "switch"
+on = "1"

@@ -29,3 +29,32 @@ pgrep -x dockerd >/dev/null || sudo sh -c '/etc/boxquell/boot.d/docker &'
 for _ in $(seq 20); do sudo docker info >/dev/null 2>&1 && break; sleep 1; done
 sudo docker version --format 'Docker {{.Server.Version}}'
 '''
+
+[[config]]
+env = "DOCKER_DEFAULT_PLATFORM"
+label = "Default platform"
+help = "Platform used to pull and build images."
+options = ["linux/amd64", "linux/arm64"]
+placeholder = "the sandbox's own"
+
+[[config]]
+env = "BUILDKIT_PROGRESS"
+label = "Build output"
+help = "How docker build shows its progress."
+kind = "choice"
+options = ["auto", "plain", "tty"]
+placeholder = "auto"
+
+[[config]]
+env = "COMPOSE_PROJECT_NAME"
+label = "Compose project name"
+help = "Name that Compose gives to a project."
+placeholder = "the folder name"
+
+[[config]]
+env = "DOCKER_CLI_HINTS"
+label = "CLI hints"
+help = "Whether the docker command prints hints."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"

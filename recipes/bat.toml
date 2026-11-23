@@ -12,3 +12,16 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat
 bat --version
 '''
+
+[[config]]
+env = "BAT_THEME"
+label = "Theme"
+help = "Color theme for syntax highlighting."
+options = ["ansi", "base16", "GitHub", "Nord", "OneHalfDark", "Dracula", "Solarized (dark)"]
+
+[[config]]
+env = "BAT_STYLE"
+label = "Style"
+help = "Which decorations bat shows."
+options = ["full", "plain", "numbers", "changes", "header,grid"]
+placeholder = "full"

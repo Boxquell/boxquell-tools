@@ -18,3 +18,48 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends terraform
 terraform version | head -n1
 '''
+
+[[credential]]
+name = "terraform"
+label = "HCP Terraform token"
+help = "A user or team API token for HCP Terraform."
+url = "https://app.terraform.io/app/settings/tokens"
+hosts = ["app.terraform.io"]
+env = ["TF_TOKEN_app_terraform_io"]
+
+[[config]]
+env = "TF_LOG"
+label = "Log level"
+help = "How much the log shows."
+kind = "choice"
+options = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "OFF"]
+
+[[config]]
+env = "TF_LOG_PATH"
+label = "Log file"
+help = "File that the log is written to."
+
+[[config]]
+env = "TF_INPUT"
+label = "No prompts"
+help = "Never ask for input."
+kind = "switch"
+on = "0"
+
+[[config]]
+env = "TF_WORKSPACE"
+label = "Workspace"
+help = "Workspace to use."
+placeholder = "default"
+
+[[config]]
+env = "TF_PLUGIN_CACHE_DIR"
+label = "Provider cache"
+help = "Folder where downloaded providers are shared."
+
+[[config]]
+env = "CHECKPOINT_DISABLE"
+label = "No update check"
+help = "Do not check for new versions."
+kind = "switch"
+on = "1"

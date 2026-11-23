@@ -19,3 +19,43 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends google-cloud-cli
 gcloud --version | head -n1
 '''
+
+[[credential]]
+name = "gcloud"
+label = "Google Cloud access token"
+help = "An OAuth access token, which lasts one hour; print one with gcloud auth print-access-token."
+url = "https://docs.cloud.google.com/sdk/docs/authenticate"
+hosts = ["*.googleapis.com"]
+env = ["CLOUDSDK_AUTH_ACCESS_TOKEN"]
+
+[[config]]
+env = "CLOUDSDK_CORE_PROJECT"
+label = "Project"
+help = "Project ID that commands use unless told otherwise."
+
+[[config]]
+env = "CLOUDSDK_COMPUTE_REGION"
+label = "Compute region"
+help = "Default region for Compute Engine."
+options = ["us-central1", "europe-west1", "europe-west3"]
+
+[[config]]
+env = "CLOUDSDK_COMPUTE_ZONE"
+label = "Compute zone"
+help = "Default zone for Compute Engine."
+options = ["us-central1-a", "europe-west1-b", "europe-west3-a"]
+
+[[config]]
+env = "CLOUDSDK_CORE_DISABLE_PROMPTS"
+label = "No prompts"
+help = "Never ask interactive questions."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "CLOUDSDK_CORE_VERBOSITY"
+label = "Verbosity"
+help = "Lowest level of message that is shown."
+kind = "choice"
+options = ["debug", "info", "warning", "error", "critical", "none"]
+placeholder = "warning"

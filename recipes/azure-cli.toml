@@ -25,3 +25,37 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends azure-cli
 az version --query '"azure-cli"' -o tsv
 '''
+
+[[config]]
+env = "AZURE_DEFAULTS_GROUP"
+label = "Resource group"
+help = "Resource group that commands use unless told otherwise."
+
+[[config]]
+env = "AZURE_DEFAULTS_LOCATION"
+label = "Location"
+help = "Location that commands use unless told otherwise."
+options = ["westeurope", "northeurope", "eastus", "westus2"]
+
+[[config]]
+env = "AZURE_CORE_OUTPUT"
+label = "Output format"
+help = "How command results are printed."
+kind = "choice"
+options = ["json", "jsonc", "yaml", "yamlc", "table", "tsv", "none"]
+placeholder = "json"
+
+[[config]]
+env = "AZURE_CORE_COLLECT_TELEMETRY"
+label = "Usage data"
+help = "Whether usage data is sent to Microsoft."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"
+
+[[config]]
+env = "AZURE_CORE_ONLY_SHOW_ERRORS"
+label = "Errors only"
+help = "Hide warnings and show only errors."
+kind = "switch"
+on = "true"

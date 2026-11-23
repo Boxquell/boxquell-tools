@@ -17,3 +17,29 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 curl -fsSL https://awscli.amazonaws.com/v2/install.sh | sudo bash -s -- --system
 aws --version
 '''
+
+[[config]]
+env = "AWS_PROFILE"
+label = "Profile"
+help = "Named profile from the AWS config files."
+placeholder = "default"
+
+[[config]]
+env = "AWS_DEFAULT_REGION"
+label = "Region"
+help = "Region that commands use unless told otherwise."
+options = ["us-east-1", "us-west-2", "eu-west-1", "eu-central-1"]
+
+[[config]]
+env = "AWS_DEFAULT_OUTPUT"
+label = "Output format"
+help = "How command results are printed."
+kind = "choice"
+options = ["json", "yaml", "yaml-stream", "text", "table"]
+placeholder = "json"
+
+[[config]]
+env = "AWS_PAGER"
+label = "Pager"
+help = "Program that pages output; leave a space to turn paging off."
+placeholder = "less"

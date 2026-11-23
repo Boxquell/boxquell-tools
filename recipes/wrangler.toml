@@ -13,3 +13,37 @@ install = '''
 sudo npm install -g wrangler
 wrangler --version | tail -n1
 '''
+
+[[credential]]
+name = "cloudflare"
+label = "Cloudflare API token"
+help = "An API token with the permissions Wrangler needs."
+url = "https://dash.cloudflare.com/profile/api-tokens"
+hosts = ["api.cloudflare.com"]
+env = ["CLOUDFLARE_API_TOKEN"]
+
+[[config]]
+env = "CLOUDFLARE_ACCOUNT_ID"
+label = "Account ID"
+help = "Cloudflare account that Wrangler works on."
+
+[[config]]
+env = "WRANGLER_LOG"
+label = "Log level"
+help = "How much Wrangler logs."
+kind = "choice"
+options = ["none", "error", "warn", "info", "log", "debug"]
+placeholder = "log"
+
+[[config]]
+env = "WRANGLER_SEND_METRICS"
+label = "Usage data"
+help = "Whether usage data is sent to Cloudflare."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"
+
+[[config]]
+env = "WRANGLER_LOG_PATH"
+label = "Debug log folder"
+help = "File or folder that receives debug logs."

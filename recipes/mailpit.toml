@@ -19,3 +19,22 @@ sudo chmod +x /etc/boxquell/boot.d/mailpit
 sudo /etc/boxquell/boot.d/mailpit
 mailpit version | head -n1
 '''
+
+[[config]]
+env = "MP_MAX_MESSAGES"
+label = "Messages kept"
+help = "How many messages are kept; the oldest are deleted."
+kind = "number"
+placeholder = "500"
+
+[[config]]
+env = "MP_DATABASE"
+label = "Database file"
+help = "Store messages in this file so that they survive a restart."
+
+[[config]]
+env = "MP_SMTP_AUTH_ACCEPT_ANY"
+label = "Accept any login"
+help = "Accept any SMTP user name and password."
+kind = "switch"
+on = "true"

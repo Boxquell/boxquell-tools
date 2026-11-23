@@ -13,3 +13,22 @@ install = '''
 sudo npm install -g netlify-cli
 netlify --version
 '''
+
+[[credential]]
+name = "netlify"
+label = "Netlify access token"
+help = "A personal access token."
+url = "https://app.netlify.com/user/applications#personal-access-tokens"
+hosts = ["api.netlify.com"]
+env = ["NETLIFY_AUTH_TOKEN"]
+
+[[config]]
+env = "NETLIFY_SITE_ID"
+label = "Site ID"
+help = "Site that the CLI works on, without running netlify link."
+
+[[config]]
+env = "DEBUG"
+label = "Debug output"
+help = "Print full debug output."
+options = ["*"]

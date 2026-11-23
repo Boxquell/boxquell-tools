@@ -10,3 +10,23 @@ sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends git git-lfs
 git --version
 '''
+
+[[config]]
+env = "GIT_AUTHOR_NAME"
+label = "Author name"
+help = "Name recorded as the author of commits."
+
+[[config]]
+env = "GIT_AUTHOR_EMAIL"
+label = "Author email"
+help = "Email recorded as the author of commits."
+
+[[config]]
+env = "GIT_COMMITTER_NAME"
+label = "Committer name"
+help = "Name recorded as the committer of commits."
+
+[[config]]
+env = "GIT_COMMITTER_EMAIL"
+label = "Committer email"
+help = "Email recorded as the committer of commits."

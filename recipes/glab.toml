@@ -22,3 +22,46 @@ glab --version
 
 [env]
 GITLAB_HOST = "gitlab.com"
+
+[[credential]]
+name = "gitlab"
+label = "GitLab access token"
+help = "A personal access token with the api scope."
+url = "https://gitlab.com/-/user_settings/personal_access_tokens"
+hosts = ["gitlab.com"]
+env = ["GITLAB_TOKEN"]
+
+[[config]]
+env = "GITLAB_HOST"
+label = "GitLab host"
+help = "The GitLab hostname to use, for a self-managed instance."
+placeholder = "gitlab.com"
+
+[[config]]
+env = "NO_PROMPT"
+label = "No prompts"
+help = "Never ask interactive questions."
+kind = "switch"
+on = "true"
+
+[[config]]
+env = "GLAB_PAGER"
+label = "Pager"
+help = "Program that pages long output."
+placeholder = "less -R"
+
+[[config]]
+env = "GLAB_GLAMOUR_STYLE"
+label = "Markdown style"
+help = "Color style for rendered Markdown."
+kind = "choice"
+options = ["auto", "dark", "light", "notty"]
+placeholder = "auto"
+
+[[config]]
+env = "GLAB_SEND_TELEMETRY"
+label = "Usage data"
+help = "Whether usage data is sent to your GitLab instance."
+kind = "choice"
+options = ["true", "false"]
+placeholder = "true"

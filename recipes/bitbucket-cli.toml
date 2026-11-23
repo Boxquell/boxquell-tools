@@ -30,3 +30,38 @@ bkt --version
 [env]
 BKT_HOST = "https://bitbucket.org"
 BKT_ALLOW_INSECURE_STORE = "1"
+
+[[credential]]
+name = "bitbucket"
+label = "Bitbucket access token"
+help = "An access token for your workspace, repository or account."
+url = "https://bitbucket.org/account/settings/app-passwords/"
+hosts = ["bitbucket.org", "api.bitbucket.org"]
+env = ["BKT_TOKEN"]
+
+[[config]]
+env = "BKT_WORKSPACE"
+label = "Workspace"
+help = "Workspace that commands use unless told otherwise."
+
+[[config]]
+env = "BKT_PROJECT"
+label = "Project"
+help = "Project that commands use unless told otherwise."
+
+[[config]]
+env = "BKT_REPO"
+label = "Repository"
+help = "Repository that commands use unless told otherwise."
+
+[[config]]
+env = "BKT_USERNAME"
+label = "User name"
+help = "User name for basic authentication; Cloud API tokens need it."
+
+[[config]]
+env = "BKT_AUTH_METHOD"
+label = "Authentication"
+help = "Basic for Cloud, bearer for Data Center without a user name."
+kind = "choice"
+options = ["basic", "bearer"]

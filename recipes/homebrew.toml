@@ -24,3 +24,38 @@ printf '%s\n' '[ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linux
 [env]
 HOMEBREW_NO_ANALYTICS = "1"
 HOMEBREW_NO_ENV_HINTS = "1"
+
+[[config]]
+env = "HOMEBREW_NO_AUTO_UPDATE"
+label = "No automatic update"
+help = "Do not update Homebrew before each install."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "HOMEBREW_NO_ANALYTICS"
+label = "No analytics"
+help = "Do not send usage statistics."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "HOMEBREW_NO_INSTALL_CLEANUP"
+label = "Keep old versions"
+help = "Do not remove old versions after an install."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "HOMEBREW_NO_ENV_HINTS"
+label = "No hints"
+help = "Hide the hints printed after commands."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "HOMEBREW_VERBOSE"
+label = "Verbose"
+help = "Print more details."
+kind = "switch"
+on = "1"
