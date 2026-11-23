@@ -1,6 +1,6 @@
 name = "Android SDK"
 category = "tool"
-description = "Android command-line tools, platform tools, a platform and build tools, for building apps with Gradle or Flutter; installing it accepts Google's SDK licences. No emulator."
+description = "Android command-line tools, platform tools, a platform and build tools, for building apps with Gradle or Flutter (give the sandbox 8 GiB of memory for that); installing it accepts Google's SDK licences. No emulator."
 icon = "android.svg"
 icon_color = "#34A853"
 os = ["debian", "ubuntu"]
