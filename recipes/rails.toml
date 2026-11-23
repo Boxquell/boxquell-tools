@@ -1,0 +1,16 @@
+name = "Ruby on Rails"
+category = "tool"
+description = "Ruby on Rails (`rails`), installed as a gem (needs `ruby`)"
+icon = "rubyonrails.svg"
+icon_color = "#D30001"
+os = ["debian", "ubuntu"]
+requires = ["ruby"]
+install_allow = ["@packages", "rubygems.org", "index.rubygems.org", "*.rubygems.org"]
+allow = ["rubygems.org", "index.rubygems.org", "*.rubygems.org"]
+install = '''
+# Libraries that the gems of a new Rails project build against (SQLite is its default database).
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends git libsqlite3-dev
+sudo gem install rails --no-document
+rails --version
+'''

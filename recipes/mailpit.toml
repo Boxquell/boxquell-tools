@@ -1,0 +1,21 @@
+name = "Mailpit"
+category = "tool"
+description = "Mailpit, which catches outgoing mail: SMTP on 127.0.0.1:1025, web UI on port 8025; started at every boot"
+icon = "mail-check.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "raw.githubusercontent.com", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+ports = [8025]
+install = '''
+# The official install script, which puts the latest release binary into /usr/local/bin.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+curl -fsSL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh | sudo bash
+
+# Start it now and on every boot of the sandbox (there is no systemd). Only this computer can reach the forwarded web port.
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'nohup runuser -u dev -- mailpit --listen 0.0.0.0:8025 --smtp 127.0.0.1:1025 >/tmp/mailpit.log 2>&1 &' | sudo tee /etc/boxquell/boot.d/mailpit >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/mailpit
+sudo /etc/boxquell/boot.d/mailpit
+mailpit version | head -n1
+'''

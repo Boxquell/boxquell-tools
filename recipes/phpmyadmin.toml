@@ -1,0 +1,49 @@
+name = "phpMyAdmin"
+category = "tool"
+description = "phpMyAdmin for the local MariaDB, served with PHP's built-in web server on port 8081 and started at every boot; signed in as the MariaDB user `dev` without a password (needs `php` and `mariadb`)"
+icon = "phpmyadmin.svg"
+icon_color = "#6C78AF"
+os = ["debian", "ubuntu"]
+requires = ["php", "mariadb"]
+install_allow = ["@packages", "packages.sury.org", "files.phpmyadmin.net"]
+ports = [8081]
+install = '''
+# The MySQL driver for the installed PHP version, from the same repository as PHP itself.
+sudo apt-get update -q
+v=$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends "php$v-mysql"
+
+# The latest release, checked against the SHA-256 that phpMyAdmin publishes next to it.
+version=$(curl -fsSL https://www.phpmyadmin.net/home_page/version.json | php -r 'echo json_decode(stream_get_contents(STDIN))->version;')
+cd "$(mktemp -d)"
+file=phpMyAdmin-$version-all-languages.tar.gz
+curl -fsSLO "https://files.phpmyadmin.net/phpMyAdmin/$version/$file"
+curl -fsSL "https://files.phpmyadmin.net/phpMyAdmin/$version/$file.sha256" | sha256sum -c -
+sudo rm -rf /opt/phpmyadmin
+sudo mkdir -p /opt/phpmyadmin
+sudo tar -xzf "$file" -C /opt/phpmyadmin --strip-components=1 --no-same-owner
+sudo mkdir -p /opt/phpmyadmin/tmp
+sudo chown -R dev: /opt/phpmyadmin/tmp
+
+# Sign in automatically as the MariaDB user `dev` (see the mariadb recipe). Only this computer
+# can reach the forwarded port, so no further password is asked for.
+secret=$(head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n')
+sudo tee /opt/phpmyadmin/config.inc.php >/dev/null <<PHP
+<?php
+\$cfg['blowfish_secret'] = '$secret';
+\$cfg['TempDir'] = '/opt/phpmyadmin/tmp';
+\$i = 1;
+\$cfg['Servers'][\$i]['host'] = '127.0.0.1';
+\$cfg['Servers'][\$i]['auth_type'] = 'config';
+\$cfg['Servers'][\$i]['user'] = 'dev';
+\$cfg['Servers'][\$i]['password'] = '';
+\$cfg['Servers'][\$i]['AllowNoPassword'] = true;
+PHP
+
+# Serve it now and on every boot of the sandbox (there is no systemd).
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'PHP_CLI_SERVER_WORKERS=4 nohup runuser -u dev -- php -S 0.0.0.0:8081 -t /opt/phpmyadmin >/tmp/phpmyadmin.log 2>&1 &' | sudo tee /etc/boxquell/boot.d/phpmyadmin >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/phpmyadmin
+sudo /etc/boxquell/boot.d/phpmyadmin
+echo "phpMyAdmin $version on http://127.0.0.1:8081"
+'''

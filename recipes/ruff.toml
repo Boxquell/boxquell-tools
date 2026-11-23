@@ -1,0 +1,14 @@
+name = "Ruff"
+category = "tool"
+description = "Ruff (`ruff`), a fast Python linter and formatter"
+icon = "ruff.svg"
+icon_color = "#D7FF64"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "astral.sh", "*.astral.sh", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+install = '''
+# The official installer, which picks the release binary for this CPU.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+curl -LsSf https://astral.sh/ruff/install.sh | sudo env RUFF_UNMANAGED_INSTALL=/usr/local/bin sh
+ruff --version
+'''

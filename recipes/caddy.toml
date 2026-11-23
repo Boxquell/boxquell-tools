@@ -1,0 +1,18 @@
+name = "Caddy"
+category = "tool"
+description = "Caddy (`caddy`), a web server with automatic HTTPS, from the official Debian repository; not started by itself, for example `caddy file-server --listen :2015` (port 2015 is forwarded)"
+icon = "caddy.svg"
+icon_color = "#1F88C0"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "dl.cloudsmith.io"]
+ports = [2015]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gnupg debian-keyring debian-archive-keyring apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list >/dev/null
+sudo chmod o+r /usr/share/keyrings/caddy-stable-archive-keyring.gpg /etc/apt/sources.list.d/caddy-stable.list
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends caddy
+caddy version
+'''

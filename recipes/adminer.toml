@@ -1,0 +1,43 @@
+name = "Adminer"
+category = "tool"
+description = "Adminer, a database manager in a single PHP file for MariaDB and PostgreSQL, served with PHP's built-in web server on port 8082 and started at every boot (needs `php`; the servers come from the `mariadb` and `postgres` recipes)"
+icon = "adminer.svg"
+icon_color = "#34567C"
+os = ["debian", "ubuntu"]
+requires = ["php"]
+install_allow = ["@packages", "packages.sury.org", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+ports = [8082]
+install = '''
+# MySQL and PostgreSQL drivers for the installed PHP version, from the same repository as PHP itself.
+sudo apt-get update -q
+v=$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends "php$v-mysql" "php$v-pgsql"
+
+# The latest release, the English single-file build.
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/vrana/adminer/releases/latest)
+tag=${tag##*/v}
+sudo mkdir -p /opt/adminer
+sudo curl -fsSLo /opt/adminer/adminer.php "https://github.com/vrana/adminer/releases/download/v$tag/adminer-$tag-en.php"
+
+# Adminer refuses logins without a password; the databases of these recipes have none for `dev`.
+# This front file lets the login through and fills in the form. Only this computer can reach the forwarded port.
+sudo tee /opt/adminer/index.php >/dev/null <<'PHP'
+<?php
+namespace Adminer;
+function adminer_object() {
+    class Passwordless extends Adminer {
+        function login($login, $password) { return true; }
+        function credentials() { return [$_GET['server'] ?? '127.0.0.1', $_GET['username'] ?? 'dev', '']; }
+    }
+    return new Passwordless;
+}
+include __DIR__ . '/adminer.php';
+PHP
+
+# Serve it now and on every boot of the sandbox (there is no systemd).
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'PHP_CLI_SERVER_WORKERS=4 nohup runuser -u dev -- php -S 0.0.0.0:8082 -t /opt/adminer >/tmp/adminer.log 2>&1 &' | sudo tee /etc/boxquell/boot.d/adminer >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/adminer
+sudo /etc/boxquell/boot.d/adminer
+echo "Adminer $tag on http://127.0.0.1:8082"
+'''

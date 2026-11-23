@@ -1,0 +1,14 @@
+name = "ESLint"
+category = "tool"
+description = "ESLint (`eslint`) as a global npm package (needs `node`)"
+icon = "eslint.svg"
+icon_color = "#4B32C3"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["registry.npmjs.org"]
+install = '''
+# Installed with npm into /usr/local so every user and session finds it.
+sudo npm install -g eslint
+eslint --version
+'''

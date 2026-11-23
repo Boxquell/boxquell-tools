@@ -1,0 +1,15 @@
+name = "Poetry"
+category = "tool"
+description = "Poetry (`poetry`), dependency management and packaging for Python (needs `python`)"
+icon = "poetry.svg"
+icon_color = "#60A5FA"
+os = ["debian", "ubuntu"]
+requires = ["python"]
+install_allow = ["install.python-poetry.org", "pypi.org", "files.pythonhosted.org"]
+allow = ["pypi.org", "files.pythonhosted.org"]
+install = '''
+# The official installer, into /opt/poetry with the command linked into /usr/local/bin.
+curl -sSL https://install.python-poetry.org | sudo env POETRY_HOME=/opt/poetry python3 -
+sudo ln -sf /opt/poetry/bin/poetry /usr/local/bin/poetry
+poetry --version
+'''

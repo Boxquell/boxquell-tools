@@ -1,0 +1,20 @@
+name = "Yarn"
+category = "tool"
+description = "Yarn (modern, through Corepack) for Node.js"
+icon = "yarn.svg"
+icon_color = "#2C8EBB"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org", "repo.yarnpkg.com"]
+allow = ["registry.npmjs.org", "repo.yarnpkg.com"]
+install = '''
+# Corepack puts the yarn shim into /usr/local/bin; the current stable Yarn is fetched once and cached.
+sudo npm install -g corepack
+sudo corepack enable yarn
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+corepack prepare yarn@stable --activate
+yarn --version
+'''
+
+[env]
+COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"

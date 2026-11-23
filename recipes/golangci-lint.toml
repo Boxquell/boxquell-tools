@@ -1,0 +1,15 @@
+name = "golangci-lint"
+category = "tool"
+description = "golangci-lint, the Go linters runner (needs `go`)"
+icon = "shield-check.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+requires = ["go"]
+install_allow = ["@packages", "golangci-lint.run", "raw.githubusercontent.com", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+install = '''
+# The official install script, which fetches the latest release binary and checks its checksum.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+curl -sSfL https://golangci-lint.run/install.sh | sudo sh -s -- -b /usr/local/bin
+golangci-lint --version
+'''

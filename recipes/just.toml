@@ -1,0 +1,14 @@
+name = "just"
+category = "tool"
+description = "`just`, a command runner for project recipes (justfile)"
+icon = "just.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "just.systems", "api.github.com", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+install = '''
+# The official install script, which picks the release binary for this CPU.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+curl --proto '=https' --tlsv1.2 -fsSL https://just.systems/install.sh | sudo bash -s -- --to /usr/local/bin
+just --version
+'''

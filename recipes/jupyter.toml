@@ -1,0 +1,25 @@
+name = "JupyterLab"
+category = "tool"
+description = "JupyterLab on port 8888, started at every boot and reachable from the host without a token (needs `python`)"
+icon = "jupyter.svg"
+icon_color = "#F37626"
+os = ["debian", "ubuntu"]
+requires = ["python"]
+install_allow = ["pypi.org", "files.pythonhosted.org", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+allow = ["pypi.org", "files.pythonhosted.org"]
+ports = [8888]
+install = '''
+# Installed into its own environment, so it does not touch the projects' packages.
+sudo uv venv --quiet /opt/jupyterlab
+sudo uv pip install --quiet --python /opt/jupyterlab/bin/python jupyterlab
+sudo ln -sf /opt/jupyterlab/bin/jupyter /opt/jupyterlab/bin/jupyter-lab /usr/local/bin/
+sudo chmod -R a+rX /opt/jupyterlab
+
+# Start it now and on every boot of the sandbox (there is no systemd), in /workspace. Only this
+# computer can reach the forwarded port, so no token is asked for.
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'cd /workspace && nohup runuser -u dev -- jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --ServerApp.token= --ServerApp.password= >/tmp/jupyter.log 2>&1 &' | sudo tee /etc/boxquell/boot.d/jupyter >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/jupyter
+sudo /etc/boxquell/boot.d/jupyter
+jupyter lab --version
+'''

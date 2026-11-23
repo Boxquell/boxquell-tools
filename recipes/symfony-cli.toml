@@ -1,0 +1,18 @@
+name = "Symfony CLI"
+category = "tool"
+description = "The Symfony CLI (`symfony`) for creating and serving Symfony projects (needs `php`)"
+icon = "symfony.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+requires = ["php"]
+install_allow = ["github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+allow = ["repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]
+install = '''
+# The release binary from GitHub.
+case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+cd "$(mktemp -d)"
+curl -fsSLo symfony-cli.tar.gz "https://github.com/symfony-cli/symfony-cli/releases/latest/download/symfony-cli_linux_$arch.tar.gz"
+tar -xzf symfony-cli.tar.gz symfony
+sudo install -m 0755 symfony /usr/local/bin/symfony
+symfony version --no-ansi
+'''

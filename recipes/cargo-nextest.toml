@@ -1,0 +1,15 @@
+name = "cargo-nextest"
+category = "tool"
+description = "cargo-nextest (`cargo nextest`), a faster test runner for Rust (needs `rust`)"
+icon = "test-tubes.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+requires = ["rust"]
+install_allow = ["get.nexte.st", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+install = '''
+# The official prebuilt binary, into ~/.cargo/bin next to cargo.
+case "$(uname -m)" in x86_64) target=linux ;; aarch64) target=linux-arm ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+mkdir -p "$HOME/.cargo/bin"
+curl -LsSf "https://get.nexte.st/latest/$target" | tar zxf - -C "$HOME/.cargo/bin"
+"$HOME/.cargo/bin/cargo-nextest" nextest --version | head -n1
+'''

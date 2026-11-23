@@ -1,0 +1,14 @@
+name = "TypeScript"
+category = "tool"
+description = "The TypeScript compiler (`tsc`, `tsserver`) as a global npm package (needs `node`)"
+icon = "typescript.svg"
+icon_color = "#3178C6"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["registry.npmjs.org"]
+install = '''
+# Installed with npm into /usr/local so every user and session finds it.
+sudo npm install -g typescript
+tsc --version
+'''
