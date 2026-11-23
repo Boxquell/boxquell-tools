@@ -1,6 +1,6 @@
 # boxquell-tools
 
-Official tool recipes for [Boxquell](https://github.com/ToBee94/boxquell). Boxquell adds this repository by itself on first use.
+Official tool recipes for [Boxquell](https://github.com/Boxquell/boxquell). Boxquell adds this repository by itself on first use.
 
 ```sh
 boxquell recipes                      # everything that can be installed
@@ -43,7 +43,7 @@ In Compose files use `network_mode: host`. Containers are held to the sandbox's 
 
 ## Contributing
 
-One TOML file per recipe in `recipes/`. The format is described in [docs/recipes.md](https://github.com/ToBee94/boxquell/blob/main/docs/recipes.md); the workflow in this repository checks every file.
+One TOML file per recipe in `recipes/`. The format is described in [docs/recipes.md](https://github.com/Boxquell/boxquell/blob/main/docs/recipes.md); the workflow in this repository checks every file.
 
 ## License
 
