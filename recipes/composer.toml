@@ -1,0 +1,14 @@
+name = "Composer"
+category = "tool"
+description = "Dependency manager for PHP (`composer`)"
+requires = ["php"]
+install_allow = ["composer.github.io", "getcomposer.org"]
+allow = ["repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]
+install = '''
+cd "$(mktemp -d)"
+expected=$(curl -fsSL https://composer.github.io/installer.sig)
+curl -fsSLo composer-setup.php https://getcomposer.org/installer
+echo "$expected  composer-setup.php" | sha384sum -c -
+sudo php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer
+composer --version
+'''

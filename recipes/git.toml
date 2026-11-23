@@ -1,0 +1,9 @@
+name = "Git"
+category = "tool"
+description = "git with Git LFS from Debian"
+install_allow = ["deb.debian.org", "security.debian.org"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends git git-lfs
+git --version
+'''

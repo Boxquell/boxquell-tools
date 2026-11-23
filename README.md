@@ -13,7 +13,9 @@ boxquell repo update tools          # fetch the latest recipes
 | Recipe | What it installs |
 |---|---|
 | `build-essential` | gcc, g++, make and pkg-config from Debian |
+| `composer` | Composer, the dependency manager for PHP (installs PHP from the languages repository) |
 | `gh` | GitHub CLI, with github.com allowed for git and the API |
+| `git` | git with Git LFS |
 | `jq` | Command-line JSON processor |
 | `ripgrep` | Fast recursive search (`rg`) |
 
