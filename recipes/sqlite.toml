@@ -1,0 +1,12 @@
+name = "SQLite"
+category = "tool"
+description = "The `sqlite3` command-line shell from Debian"
+icon = "sqlite.svg"
+icon_color = "#003B57"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends sqlite3
+sqlite3 --version
+'''

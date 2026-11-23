@@ -1,0 +1,12 @@
+name = "tmux"
+category = "tool"
+description = "Terminal multiplexer (`tmux`)"
+icon = "tmux.svg"
+icon_color = "#1BB91F"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends tmux
+tmux -V
+'''

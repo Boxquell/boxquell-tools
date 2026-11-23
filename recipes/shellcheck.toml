@@ -1,0 +1,12 @@
+name = "ShellCheck"
+category = "tool"
+description = "Static analysis for shell scripts (`shellcheck`)"
+icon = "shellcheck.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends shellcheck
+shellcheck --version | head -n2
+'''

@@ -1,0 +1,15 @@
+name = "Vercel CLI"
+category = "tool"
+description = "`vercel` for deploying to Vercel (installs Node.js); set a `vercel` secret on VERCEL_TOKEN to log in"
+icon = "vercel.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["api.vercel.com"]
+secrets = ["vercel"]
+install = '''
+# Installed with npm into /usr/local. Authenticate with VERCEL_TOKEN or `vercel login`.
+sudo npm install -g vercel
+vercel --version | tail -n1
+'''

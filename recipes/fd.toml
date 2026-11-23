@@ -1,0 +1,14 @@
+name = "fd"
+category = "tool"
+description = "Fast, friendly alternative to find (`fd`)"
+icon = "fd.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+# Debian names the binary fdfind; link it as fd.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends fd-find
+sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
+fd --version
+'''

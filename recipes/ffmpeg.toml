@@ -1,0 +1,12 @@
+name = "FFmpeg"
+category = "tool"
+description = "FFmpeg and ffprobe for converting audio and video"
+icon = "ffmpeg.svg"
+icon_color = "#007808"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ffmpeg
+ffmpeg -version | head -n1
+'''

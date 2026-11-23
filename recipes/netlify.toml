@@ -1,0 +1,15 @@
+name = "Netlify CLI"
+category = "tool"
+description = "`netlify` for deploying to Netlify (installs Node.js); set a `netlify` secret on NETLIFY_AUTH_TOKEN to log in"
+icon = "netlify.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["api.netlify.com"]
+secrets = ["netlify"]
+install = '''
+# Installed with npm into /usr/local. Authenticate with NETLIFY_AUTH_TOKEN or `netlify login`.
+sudo npm install -g netlify-cli
+netlify --version
+'''

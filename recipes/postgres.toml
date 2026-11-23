@@ -1,0 +1,27 @@
+name = "PostgreSQL"
+category = "tool"
+description = "PostgreSQL server and `psql`, started at every boot and listening on localhost only; the role and database `dev` exist, without a password (local socket and 127.0.0.1)"
+icon = "postgresql.svg"
+icon_color = "#4169E1"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends postgresql postgresql-client
+
+# Start the cluster now and on every boot of the sandbox (there is no systemd).
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' "pg_lsclusters -h | while read -r v n _; do pg_ctlcluster \"\$v\" \"\$n\" start; done" | sudo tee /etc/boxquell/boot.d/postgres >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/postgres
+sudo /etc/boxquell/boot.d/postgres
+for _ in $(seq 30); do pg_isready -q && break; sleep 1; done
+
+# A superuser `dev` (the sandbox is single-user), reachable without a password over the
+# local socket and from 127.0.0.1, plus a database of the same name.
+read -r v n _ < <(pg_lsclusters -h)
+sudo sed -i '1i host all dev 127.0.0.1/32 trust\nhost all dev ::1/128 trust' "/etc/postgresql/$v/$n/pg_hba.conf"
+sudo -u postgres psql -qc "CREATE ROLE dev LOGIN SUPERUSER"
+sudo -u postgres createdb -O dev dev
+sudo -u postgres psql -qc "SELECT pg_reload_conf()" >/dev/null
+psql --version
+'''

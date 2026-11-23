@@ -1,0 +1,12 @@
+name = "fzf"
+category = "tool"
+description = "Command-line fuzzy finder (`fzf`)"
+icon = "fzf.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends fzf
+fzf --version
+'''

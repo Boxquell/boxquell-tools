@@ -1,0 +1,12 @@
+name = "ImageMagick"
+category = "tool"
+description = "ImageMagick command-line tools (`convert`, `identify`, `mogrify`) for editing images"
+icon = "imagemagick.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends imagemagick
+convert --version | head -n1
+'''

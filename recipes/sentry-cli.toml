@@ -1,0 +1,16 @@
+name = "Sentry CLI"
+category = "tool"
+description = "`sentry-cli` for releases and source maps; set a `sentry` secret on SENTRY_AUTH_TOKEN to log in"
+icon = "sentry.svg"
+icon_color = "#362D59"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "sentry.io", "downloads.sentry-cdn.com", "release-registry.services.sentry.io", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+allow = ["sentry.io"]
+secrets = ["sentry"]
+install = '''
+# The official install script, with the binary placed in /usr/local/bin.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+curl -fsSL https://sentry.io/get-cli/ | sudo env INSTALL_DIR=/usr/local/bin sh
+sentry-cli --version
+'''

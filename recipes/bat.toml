@@ -1,0 +1,14 @@
+name = "bat"
+category = "tool"
+description = "A cat clone with syntax highlighting (`bat`)"
+icon = "bat.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+# Debian names the binary batcat; link it as bat.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends bat
+sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat
+bat --version
+'''

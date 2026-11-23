@@ -1,0 +1,15 @@
+name = "Wrangler"
+category = "tool"
+description = "`wrangler`, the Cloudflare Workers CLI (installs Node.js); set a `cloudflare` secret on CLOUDFLARE_API_TOKEN to log in"
+icon = "cloudflareworkers.svg"
+icon_color = "#F38020"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["api.cloudflare.com"]
+secrets = ["cloudflare"]
+install = '''
+# Installed with npm into /usr/local. Authenticate with CLOUDFLARE_API_TOKEN or `wrangler login`.
+sudo npm install -g wrangler
+wrangler --version | tail -n1
+'''

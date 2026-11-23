@@ -1,0 +1,20 @@
+name = "Redis"
+category = "tool"
+description = "Redis server and `redis-cli`, started at every boot and listening on localhost only (127.0.0.1:6379, no password)"
+icon = "redis.svg"
+icon_color = "#FF4438"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends redis-server redis-tools
+
+# Start the server now and on every boot of the sandbox (there is no systemd). It binds to
+# the loopback address, as in Debian's default configuration; data lives in /var/lib/redis.
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'mkdir -p /run/redis && chown redis: /run/redis' 'exec su -s /bin/sh redis -c "redis-server /etc/redis/redis.conf --daemonize yes --supervised no"' | sudo tee /etc/boxquell/boot.d/redis >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/redis
+redis-cli ping >/dev/null 2>&1 || sudo /etc/boxquell/boot.d/redis
+for _ in $(seq 20); do redis-cli ping >/dev/null 2>&1 && break; sleep 1; done
+redis-server --version
+'''

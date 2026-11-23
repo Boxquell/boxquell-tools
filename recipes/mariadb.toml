@@ -1,0 +1,23 @@
+name = "MariaDB"
+category = "tool"
+description = "MariaDB server and the `mariadb`/`mysql` clients (Debian ships MariaDB, not MySQL), started at every boot and listening on localhost only; the user and database `dev` exist, without a password (local socket)"
+icon = "mariadb.svg"
+icon_color = "#003545"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages"]
+install = '''
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends mariadb-server mariadb-client
+
+# Start the server now and on every boot of the sandbox (there is no systemd).
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'mkdir -p /run/mysqld && chown mysql: /run/mysqld' 'nohup mysqld_safe --bind-address=127.0.0.1 >/var/log/mariadb-boot.log 2>&1 &' | sudo tee /etc/boxquell/boot.d/mariadb >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/mariadb
+pgrep -x mariadbd >/dev/null || sudo /etc/boxquell/boot.d/mariadb
+for _ in $(seq 60); do sudo mariadb-admin ping >/dev/null 2>&1 && break; sleep 1; done
+
+# `dev` with all privileges, logging in over the local socket as the system user `dev`
+# (no password); the same account also works from 127.0.0.1 without one.
+sudo mariadb -e "CREATE DATABASE IF NOT EXISTS dev; CREATE USER IF NOT EXISTS 'dev'@'localhost' IDENTIFIED VIA unix_socket; CREATE USER IF NOT EXISTS 'dev'@'127.0.0.1' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON *.* TO 'dev'@'localhost' WITH GRANT OPTION; GRANT ALL PRIVILEGES ON *.* TO 'dev'@'127.0.0.1' WITH GRANT OPTION"
+mariadb --version
+'''

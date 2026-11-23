@@ -1,0 +1,18 @@
+name = "Stripe CLI"
+category = "tool"
+description = "`stripe` for working with the Stripe API and webhooks; log in with `stripe login` or pass `--api-key`"
+icon = "stripe.svg"
+icon_color = "#635BFF"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "packages.stripe.dev"]
+allow = ["api.stripe.com"]
+install = '''
+# Stripe's own Debian repository.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gnupg
+curl -fsSL https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee /etc/apt/sources.list.d/stripe.list >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends stripe
+stripe --version
+'''
