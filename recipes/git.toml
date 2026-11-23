@@ -1,6 +1,7 @@
 name = "Git"
 category = "tool"
 description = "git with Git LFS from Debian"
+icon = "git.svg"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 install = '''

@@ -1,6 +1,7 @@
 name = "Confluence CLI"
 category = "tool"
 description = "`confluence` (pchuri/confluence-cli) for Confluence Cloud; allow your site with a `confluence` secret that sets CONFLUENCE_API_TOKEN"
+icon = "confluence.svg"
 os = ["debian", "ubuntu"]
 requires = ["node"]
 install_allow = ["registry.npmjs.org"]
