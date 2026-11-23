@@ -1,6 +1,8 @@
 name = "VS Code Remote"
 category = "ide"
 description = "Opens the network for VS Code's Remote-SSH server and its extensions"
+icon = "vscode.svg"
+icon_color = "#007ACC"
 os = ["debian", "ubuntu"]
 allow = [
     "update.code.visualstudio.com",

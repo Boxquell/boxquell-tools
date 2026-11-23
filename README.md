@@ -50,7 +50,7 @@ In Compose files use `network_mode: host`. Containers are held to the sandbox's 
 
 One TOML file per recipe in `recipes/`. The format is described in [docs/recipes.md](https://github.com/Boxquell/boxquell/blob/main/docs/recipes.md); the workflow in this repository checks every file.
 
-A recipe may carry `icon = "<file>.svg"` right after its `description`; the file lives in `icons/` and is a single-colour SVG under 8 KB. Icons in `icons/` come from [Simple Icons](https://simpleicons.org) (CC0). The logos remain trademarks of their owners.
+A recipe may carry `icon = "<file>.svg"` right after its `description`; the file lives in `icons/` and is a single-colour SVG under 60 KB. Icons in `icons/` come from [Simple Icons](https://simpleicons.org) (CC0), generic glyphs from [Lucide](https://lucide.dev) (ISC), and a few are the projects' own logos. The logos remain trademarks of their owners.
 
 ## License
 

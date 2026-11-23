@@ -1,6 +1,8 @@
 name = "C/C++ build tools"
 category = "tool"
 description = "gcc, g++, make and pkg-config from Debian"
+icon = "build-essential.svg"
+icon_color = "#5E5CE6"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 install = '''

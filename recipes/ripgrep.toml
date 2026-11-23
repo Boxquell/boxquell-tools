@@ -1,6 +1,8 @@
 name = "ripgrep"
 category = "tool"
 description = "Fast recursive search (`rg`)"
+icon = "ripgrep.svg"
+icon_color = "#5E5CE6"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 install = '''

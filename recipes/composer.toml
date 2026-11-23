@@ -1,6 +1,8 @@
 name = "Composer"
 category = "tool"
 description = "Dependency manager for PHP (`composer`)"
+icon = "composer.svg"
+icon_color = "#885630"
 requires = ["php"]
 install_allow = ["composer.github.io", "getcomposer.org"]
 allow = ["repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]

@@ -1,6 +1,8 @@
 name = "jq"
 category = "tool"
 description = "Command-line JSON processor"
+icon = "jq.svg"
+icon_color = "#444444"
 os = ["debian", "ubuntu"]
 install_allow = ["@packages"]
 install = '''
