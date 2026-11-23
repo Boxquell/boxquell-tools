@@ -13,11 +13,13 @@ boxquell repo update tools          # fetch the latest recipes
 | Recipe | What it installs |
 |---|---|
 | `adminer` | Adminer, a database manager in one PHP file for MariaDB and PostgreSQL, served on port 8082 (installs PHP from the languages repository) |
+| `android-sdk` | Android command-line tools, platform tools, a platform (36, 35 or 34) and build tools (installs Java; accepts Google's SDK licences; x86_64 only, no emulator) |
 | `aws-cli` | AWS CLI v2 (`aws`); credentials via `boxquell set <box> --env` |
 | `azure-cli` | Azure CLI (`az`) |
 | `bat` | A cat clone with syntax highlighting (`bat`) |
 | `bitbucket-cli` | Bitbucket CLI (`bkt`) for Bitbucket Cloud |
 | `build-essential` | gcc, g++, make and pkg-config from Debian |
+| `bun` | Bun runtime, package manager and bundler for JavaScript and TypeScript |
 | `caddy` | Caddy web server, from its official Debian repository; port 2015 is forwarded |
 | `cargo-binstall` | cargo-binstall, installs Rust tools as prebuilt binaries (installs Rust from the languages repository) |
 | `cargo-nextest` | cargo-nextest, a faster test runner for Rust (installs Rust from the languages repository) |
@@ -25,10 +27,12 @@ boxquell repo update tools          # fetch the latest recipes
 | `composer` | Composer, the dependency manager for PHP (installs PHP from the languages repository) |
 | `confluence-cli` | Confluence CLI (`confluence`, from npm; installs Node.js from the languages repository) |
 | `delve` | Delve (`dlv`), the Go debugger (installs Go from the languages repository) |
+| `deno` | Deno runtime for TypeScript and JavaScript |
 | `docker` | Docker Engine with Buildx and Compose (see below) |
 | `eslint` | ESLint as a global command (installs Node.js from the languages repository) |
 | `fd` | Fast, friendly alternative to find (`fd`) |
 | `ffmpeg` | FFmpeg and ffprobe for converting audio and video |
+| `flutter` | Flutter SDK with its own Dart, for web apps and, with `android-sdk`, Android apps |
 | `fzf` | Command-line fuzzy finder |
 | `gcloud` | Google Cloud CLI (`gcloud`, `gsutil`, `bq`) |
 | `gh` | GitHub CLI, with github.com allowed for git and the API |
@@ -44,6 +48,7 @@ boxquell repo update tools          # fetch the latest recipes
 | `just` | `just`, a command runner for project recipes |
 | `kubectl` | kubectl, the Kubernetes client |
 | `laravel` | The Laravel installer (`laravel new`; installs Composer and PHP) |
+| `lazarus` | Lazarus build tools (`lazbuild`) and the component library for Free Pascal projects (installs Free Pascal) |
 | `mailpit` | Mailpit, catches outgoing mail: SMTP on port 1025 inside the sandbox, web UI on port 8025; started at boot |
 | `mariadb` | MariaDB server and clients (Debian ships MariaDB, not MySQL), started at boot on localhost; user and database `dev` without a password |
 | `netlify` | Netlify CLI (`netlify`; installs Node.js from the languages repository); a `netlify` secret can carry NETLIFY_AUTH_TOKEN |

@@ -1,0 +1,54 @@
+name = "Deno"
+category = "tool"
+description = "Deno runtime for TypeScript and JavaScript"
+icon = "deno.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "dl.deno.land"]
+allow = ["jsr.io", "deno.land", "registry.npmjs.org"]
+install = '''
+# The newest release binary from dl.deno.land.
+case "$(uname -m)" in x86_64) arch=x86_64 ;; aarch64) arch=aarch64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip
+tag=$(curl -fsSL https://dl.deno.land/release-latest.txt)
+cd "$(mktemp -d)"
+curl -fsSLo deno.zip "https://dl.deno.land/release/$tag/deno-$arch-unknown-linux-gnu.zip"
+sudo unzip -qo deno.zip -d /usr/local/bin
+sudo chmod 0755 /usr/local/bin/deno
+deno --version | head -n1
+'''
+
+# Settings on a sandbox's Config tab; each is an environment variable.
+[[config]]
+env = "NPM_CONFIG_REGISTRY"
+label = "Package registry"
+help = "Where Deno downloads npm packages from."
+options = ["https://registry.npmjs.org"]
+placeholder = "https://registry.npmjs.org"
+
+[[config]]
+env = "DENO_DIR"
+label = "Cache folder"
+help = "Where Deno keeps its cache."
+placeholder = "~/.cache/deno"
+
+[[config]]
+env = "DENO_NO_UPDATE_CHECK"
+label = "No update check"
+help = "Do not check for a newer Deno."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "DENO_NO_PROMPT"
+label = "No permission prompts"
+help = "Fail instead of asking for a permission."
+kind = "switch"
+on = "1"
+
+[[config]]
+env = "NO_COLOR"
+label = "No colors"
+help = "Turn off colored output."
+kind = "switch"

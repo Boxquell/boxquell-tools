@@ -1,0 +1,47 @@
+name = "Bun"
+category = "tool"
+description = "Bun runtime, package manager and bundler for JavaScript and TypeScript"
+icon = "bun.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "github.com", "*.githubusercontent.com"]
+allow = ["registry.npmjs.org"]
+install = '''
+# The newest release binary from GitHub.
+case "$(uname -m)" in x86_64) arch=x64 ;; aarch64) arch=aarch64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip
+cd "$(mktemp -d)"
+curl -fsSLo bun.zip "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-$arch.zip"
+unzip -q bun.zip
+sudo install -m 0755 "bun-linux-$arch/bun" /usr/local/bin/bun
+sudo ln -sf bun /usr/local/bin/bunx
+bun --version
+'''
+
+# Settings on a sandbox's Config tab; each is an environment variable.
+[[config]]
+env = "BUN_CONFIG_MAX_HTTP_REQUESTS"
+label = "Parallel downloads"
+help = "How many HTTP requests bun install runs at once."
+kind = "number"
+placeholder = "64"
+
+[[config]]
+env = "DO_NOT_TRACK"
+label = "No usage reports"
+help = "Do not upload crash reports or telemetry."
+kind = "switch"
+
+[[config]]
+env = "NO_COLOR"
+label = "No colors"
+help = "Turn off colored output."
+kind = "switch"
+
+[[config]]
+env = "BUN_CONFIG_NO_CLEAR_TERMINAL_ON_RELOAD"
+label = "Keep screen on reload"
+help = "Do not clear the terminal when bun --watch reloads."
+kind = "switch"
+on = "true"

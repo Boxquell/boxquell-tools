@@ -1,0 +1,19 @@
+name = "Lazarus"
+category = "tool"
+description = "Lazarus build tools for Free Pascal projects: `lazbuild` and the component library, to build Lazarus projects without the IDE window"
+icon = "lazarus.svg"
+icon_color = "#000000"
+os = ["debian", "ubuntu"]
+requires = ["pascal"]
+install_allow = ["@packages"]
+install = '''
+# lazbuild and the component library with its GTK and no-window backends. A sandbox has no screen,
+# so the IDE itself is left out; projects are built with `lazbuild project.lpi`.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends lcl-utils lcl-nogui lcl-gtk2 lazarus-src
+lazbuild --version | tail -n1
+'''
+uninstall = '''
+sudo DEBIAN_FRONTEND=noninteractive apt-get remove -y -q lcl-utils lcl-nogui lcl-gtk2 lazarus-src
+sudo DEBIAN_FRONTEND=noninteractive apt-get autoremove -y -q
+'''
