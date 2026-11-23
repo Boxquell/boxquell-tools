@@ -4,7 +4,7 @@ description = "Playwright (`playwright`) with headless Chromium and its system l
 icon = "playwright.svg"
 os = ["debian", "ubuntu"]
 requires = ["node"]
-install_allow = ["@packages", "registry.npmjs.org", "cdn.playwright.dev", "playwright.download.prss.microsoft.com", "playwright.azureedge.net"]
+install_allow = ["@packages", "registry.npmjs.org", "cdn.playwright.dev", "playwright.download.prss.microsoft.com", "playwright.azureedge.net", "storage.googleapis.com"]
 install = '''
 # The browser lives in /usr/local/share/playwright so every user and session finds it.
 export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
