@@ -1,0 +1,57 @@
+name = "Android SDK"
+category = "tool"
+description = "Android command-line tools, platform tools, a platform and build tools, for building apps with Gradle or Flutter; installing it accepts Google's SDK licences. No emulator."
+icon = "android.svg"
+icon_color = "#34A853"
+os = ["debian", "ubuntu"]
+versions = ["36", "35", "34"]
+requires = ["java>=17"]
+install_allow = ["@packages", "dl.google.com"]
+allow = ["dl.google.com", "maven.google.com"]
+install = '''
+# Google's command-line tools, then the platform tools and the chosen platform with the newest build tools for it.
+# The SDK's own programs exist for x86_64 Linux only.
+[ "$(uname -m)" = x86_64 ] || { echo "the Android SDK needs an x86_64 sandbox" >&2; exit 1; }
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip
+repo=https://dl.google.com/android/repository
+# The package list names the current archive and its checksum.
+entry=$(curl -fsSL "$repo/repository2-3.xml" | tr -d '\n' | sed 's|<remotePackage|\n<remotePackage|g' | grep 'path="cmdline-tools;latest"' | head -n1)
+file=$(printf '%s' "$entry" | grep -o 'commandlinetools-linux-[0-9]*_latest\.zip' | head -n1)
+sum=$(printf '%s' "$entry" | sed 's|<archive>|\n<archive>|g' | grep "$file" | sed -n 's|.*<checksum[^>]*>\([0-9a-f]*\)</checksum>.*|\1|p' | head -n1)
+[ -n "$file" ] && [ -n "$sum" ] || { echo "no command-line tools found in Google's package list" >&2; exit 1; }
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
+curl -fsSLo tools.zip "$repo/$file"
+echo "$sum  tools.zip" | sha1sum -c -
+unzip -q tools.zip
+sdk=/opt/android-sdk
+sudo rm -rf "$sdk"
+sudo install -d -o "$(id -un)" -g "$(id -gn)" "$sdk" "$sdk/cmdline-tools"
+mv cmdline-tools "$sdk/cmdline-tools/latest"
+# Google's `android` program manages the SDK; it replaces sdkmanager and records the licences as accepted.
+android="$sdk/cmdline-tools/latest/bin/android"
+build=$("$android" --sdk="$sdk" sdk list --all --all-versions 2>/dev/null | grep -o "build-tools/$BOXQUELL_VERSION\.[0-9.]*[^ ]*" | grep -v -- '-rc' | sort -V | tail -n1)
+[ -n "$build" ] || { echo "no build tools for Android $BOXQUELL_VERSION found" >&2; exit 1; }
+"$android" --sdk="$sdk" sdk install platform-tools "platforms/android-$BOXQUELL_VERSION" "$build" </dev/null
+printf 'export ANDROID_HOME=%s\nexport ANDROID_SDK_ROOT=%s\n' "$sdk" "$sdk" | sudo tee /etc/profile.d/android-sdk.sh >/dev/null
+sudo ln -sf "$android" /usr/local/bin/android
+sudo ln -sf "$sdk/platform-tools/adb" /usr/local/bin/adb
+# Flutter, when it is there, is told where the SDK is.
+if command -v flutter >/dev/null; then flutter config --android-sdk "$sdk" >/dev/null; fi
+adb --version | head -n1
+echo "Android $BOXQUELL_VERSION platform, $build"
+'''
+uninstall = '''
+sudo rm -rf /opt/android-sdk /etc/profile.d/android-sdk.sh /usr/local/bin/android /usr/local/bin/adb
+'''
+
+# Settings on a sandbox's Config tab; each is an environment variable.
+[[config]]
+env = "GRADLE_OPTS"
+label = "Gradle JVM options"
+help = "Options for the JVM that runs the Gradle client; Android builds often need more memory."
+options = ["-Xmx2g", "-Xmx4g"]
+placeholder = "none"

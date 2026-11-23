@@ -1,0 +1,69 @@
+name = "Flutter"
+category = "tool"
+description = "Flutter SDK with its own Dart, for web apps and, with the Android SDK, Android apps"
+icon = "flutter.svg"
+icon_color = "#02569B"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "storage.googleapis.com", "github.com", "*.githubusercontent.com", "pub.dev"]
+allow = ["pub.dev", "storage.googleapis.com", "maven.google.com", "dl.google.com"]
+install = '''
+# The current stable release. Flutter updates itself and keeps caches in its own folder, so it belongs to dev.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl git unzip xz-utils zip libglu1-mesa
+sudo rm -rf /opt/flutter
+sudo install -d -o "$(id -un)" -g "$(id -gn)" /opt/flutter
+case "$(uname -m)" in
+  x86_64)
+    # The release archive, checked against the checksum in the release list.
+    list=$(curl -fsSL https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json)
+    stable=$(printf '%s' "$list" | tr -d '\n' | sed -n 's|.*"current_release" *: *{[^}]*"stable" *: *"\([0-9a-f]*\)".*|\1|p')
+    [ -n "$stable" ] || { echo "no stable Flutter release found" >&2; exit 1; }
+    entry=$(printf '%s' "$list" | tr -d '\n' | tr '{' '\n' | grep "\"hash\" *: *\"$stable\"" | grep '"channel" *: *"stable"' | head -n1)
+    archive=$(printf '%s' "$entry" | sed -n 's|.*"archive" *: *"\([^"]*\)".*|\1|p')
+    sum=$(printf '%s' "$entry" | sed -n 's|.*"sha256" *: *"\([0-9a-f]*\)".*|\1|p')
+    [ -n "$archive" ] && [ -n "$sum" ] || { echo "the Flutter release list has no archive for $stable" >&2; exit 1; }
+    # Downloads go to the disk and are removed again, also when something fails.
+    work=$(mktemp -d -p /var/tmp)
+    trap 'rm -rf "$work"' EXIT
+    cd "$work"
+    curl -fsSLo flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/$archive"
+    echo "$sum  flutter.tar.xz" | sha256sum -c -
+    tar -xJf flutter.tar.xz -C /opt/flutter --strip-components=1 --no-same-owner
+    ;;
+  aarch64)
+    # There is no release archive for this CPU: the stable branch from GitHub.
+    git clone --quiet --branch stable https://github.com/flutter/flutter.git /opt/flutter
+    ;;
+  *) echo "unsupported CPU" >&2; exit 1 ;;
+esac
+git config --global --add safe.directory /opt/flutter
+for tool in flutter dart; do sudo ln -sf "/opt/flutter/bin/$tool" /usr/local/bin/; done
+# Fetches what the web target needs, so the first build does not start with a download.
+flutter precache --web
+flutter --version
+'''
+uninstall = '''
+sudo rm -rf /opt/flutter /usr/local/bin/flutter
+[ "$(readlink /usr/local/bin/dart 2>/dev/null)" = /opt/flutter/bin/dart ] && sudo rm -f /usr/local/bin/dart
+true
+'''
+
+# Settings on a sandbox's Config tab; each is an environment variable.
+[[config]]
+env = "PUB_HOSTED_URL"
+label = "Package registry"
+help = "Where pub downloads packages from."
+options = ["https://pub.dev"]
+placeholder = "https://pub.dev"
+
+[[config]]
+env = "FLUTTER_STORAGE_BASE_URL"
+label = "Download server"
+help = "Where Flutter downloads its engine and tools from, for a mirror."
+placeholder = "https://storage.googleapis.com"
+
+[[config]]
+env = "PUB_CACHE"
+label = "Package cache"
+help = "Where pub keeps downloaded packages."
+placeholder = "~/.pub-cache"
