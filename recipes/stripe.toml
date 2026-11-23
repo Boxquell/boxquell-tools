@@ -4,15 +4,20 @@ description = "`stripe` for working with the Stripe API and webhooks; log in wit
 icon = "stripe.svg"
 icon_color = "#635BFF"
 os = ["debian", "ubuntu"]
-install_allow = ["@packages", "packages.stripe.dev"]
+install_allow = ["@packages", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
 allow = ["api.stripe.com"]
 install = '''
-# Stripe's own Debian repository.
+# Release tarball from GitHub, checked against the checksum list of the same release.
 sudo apt-get update -q
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gnupg
-curl -fsSL https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg >/dev/null
-echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee /etc/apt/sources.list.d/stripe.list >/dev/null
-sudo apt-get update -q
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends stripe
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+case "$(uname -m)" in x86_64) arch=x86_64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/stripe/stripe-cli/releases/latest)
+tag=${tag##*/}
+base=https://github.com/stripe/stripe-cli/releases/download/$tag
+file=stripe_${tag#v}_linux_$arch.tar.gz
+cd "$(mktemp -d)"
+curl -fsSLO "$base/$file"
+curl -fsSL "$base/stripe-linux-checksums.txt" | grep " $file\$" | sha256sum -c -
+sudo tar -xzf "$file" -C /usr/local/bin stripe --no-same-owner
 stripe --version
 '''
