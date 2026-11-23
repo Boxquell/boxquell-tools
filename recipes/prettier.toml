@@ -1,0 +1,14 @@
+name = "Prettier"
+category = "tool"
+description = "Prettier (`prettier`), the code formatter, as a global npm package (needs `node`)"
+icon = "prettier.svg"
+icon_color = "#F7B93E"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["registry.npmjs.org"]
+install = '''
+# Installed with npm into /usr/local so every user and session finds it.
+sudo npm install -g prettier
+prettier --version
+'''

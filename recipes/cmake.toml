@@ -1,0 +1,23 @@
+name = "CMake"
+category = "tool"
+description = "CMake from the Kitware release installer, installed to /usr/local (needs a C/C++ compiler, for example `build-essential`)"
+icon = "cmake.svg"
+icon_color = "#064F8C"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+install = '''
+# Release installer from GitHub, checked against the SHA-256 list of the same release.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl
+arch=$(uname -m)
+case "$arch" in x86_64|aarch64) ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/Kitware/CMake/releases/latest)
+tag=${tag##*/}
+base=https://github.com/Kitware/CMake/releases/download/$tag
+cd "$(mktemp -d)"
+curl -fsSLO "$base/cmake-${tag#v}-SHA-256.txt"
+curl -fsSLO "$base/cmake-${tag#v}-linux-$arch.sh"
+grep "cmake-${tag#v}-linux-$arch.sh\$" "cmake-${tag#v}-SHA-256.txt" | sha256sum -c -
+sudo sh "cmake-${tag#v}-linux-$arch.sh" --skip-license --prefix=/usr/local
+cmake --version | head -n1
+'''

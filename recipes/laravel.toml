@@ -1,0 +1,21 @@
+name = "Laravel installer"
+category = "tool"
+description = "The Laravel installer (`laravel new`), installed with Composer (needs `composer`)"
+icon = "laravel.svg"
+icon_color = "#FF2D20"
+os = ["debian", "ubuntu"]
+requires = ["composer"]
+install_allow = ["@packages", "packages.sury.org", "repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]
+allow = ["repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]
+install = '''
+# SQLite driver, which new Laravel projects use by default.
+sudo apt-get update -q
+v=$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends "php$v-sqlite3" git
+# Installed globally into /opt/composer so every user and session finds it.
+sudo mkdir -p /opt/composer
+sudo env COMPOSER_HOME=/opt/composer composer global require --no-interaction laravel/installer
+sudo ln -sf /opt/composer/vendor/bin/laravel /usr/local/bin/laravel
+sudo chmod -R a+rX /opt/composer
+laravel --version
+'''

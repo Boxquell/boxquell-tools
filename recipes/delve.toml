@@ -1,0 +1,15 @@
+name = "Delve"
+category = "tool"
+description = "Delve (`dlv`), the Go debugger (needs `go`)"
+icon = "bug.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+requires = ["go"]
+install_allow = ["proxy.golang.org", "sum.golang.org", "github.com", "go.dev", "dl.google.com"]
+install = '''
+# Built with `go install` into a scratch directory, then copied into /usr/local/bin.
+export GOBIN=$(mktemp -d)
+go install github.com/go-delve/delve/cmd/dlv@latest
+sudo install -m 0755 "$GOBIN/dlv" /usr/local/bin/dlv
+dlv version | head -n1
+'''

@@ -1,0 +1,14 @@
+name = "cargo-binstall"
+category = "tool"
+description = "cargo-binstall (`cargo binstall`), installs Rust tools as prebuilt binaries instead of compiling them (needs `rust`)"
+icon = "package-check.svg"
+icon_color = "#5E5CE6"
+os = ["debian", "ubuntu"]
+requires = ["rust"]
+install_allow = ["raw.githubusercontent.com", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+allow = ["github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com", "crates.io", "index.crates.io", "static.crates.io"]
+install = '''
+# The official install script; the binary goes into ~/.cargo/bin next to cargo.
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+"$HOME/.cargo/bin/cargo" binstall -V
+'''

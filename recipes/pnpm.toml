@@ -1,0 +1,14 @@
+name = "pnpm"
+category = "tool"
+description = "pnpm, the fast disk-efficient package manager for Node.js"
+icon = "pnpm.svg"
+icon_color = "#F69220"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["registry.npmjs.org"]
+allow = ["registry.npmjs.org"]
+install = '''
+# Installed with npm into /usr/local so every user and session finds it.
+sudo npm install -g --allow-scripts=pnpm pnpm@latest
+pnpm --version
+'''
