@@ -41,5 +41,5 @@ placeholder = "json"
 [[config]]
 env = "AWS_PAGER"
 label = "Pager"
-help = "Program that pages output; leave a space to turn paging off."
-placeholder = "less"
+help = "Program that pages output. Set to an empty string in the shell to turn paging off."
+placeholder = "the system pager"

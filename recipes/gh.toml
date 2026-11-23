@@ -28,7 +28,7 @@ placeholder = "github.com"
 [[config]]
 env = "GH_REPO"
 label = "Default repository"
-help = "Repository for commands outside a clone, as OWNER/REPO."
+help = "Repository for commands that otherwise use the local clone, as [HOST/]OWNER/REPO."
 placeholder = "owner/repo"
 
 [[config]]

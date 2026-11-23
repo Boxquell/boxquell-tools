@@ -18,7 +18,7 @@ sentry-cli --version
 [[credential]]
 name = "sentry"
 label = "Sentry auth token"
-help = "An auth token with the scopes for releases and source maps."
+help = "An organization token (fixed permissions, meant for CI and sentry-cli) or a personal token, created on sentry.io."
 url = "https://sentry.io/settings/account/api/auth-tokens/"
 hosts = ["sentry.io"]
 env = ["SENTRY_AUTH_TOKEN"]

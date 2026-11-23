@@ -25,7 +25,7 @@ env = "TF_LOG"
 label = "Log level"
 help = "How much the log shows."
 kind = "choice"
-options = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "OFF"]
+options = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR"]
 
 [[config]]
 env = "TF_LOG_PATH"

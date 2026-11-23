@@ -17,7 +17,7 @@ confluence --version
 [[credential]]
 name = "confluence"
 label = "Confluence API token"
-help = "An API token; without an email on the Config tab it is sent as a bearer token."
+help = "An Atlassian API token (Cloud, sent with the email from the Config tab as HTTP Basic) or a personal access token (Data Center, bearer)."
 url = "https://id.atlassian.com/manage-profile/security/api-tokens"
 hosts = ["*.atlassian.net", "api.atlassian.com"]
 env = ["CONFLUENCE_API_TOKEN"]
@@ -36,6 +36,6 @@ help = "Account email for basic authentication."
 [[config]]
 env = "CONFLUENCE_AUTH_TYPE"
 label = "Authentication"
-help = "Basic with an email, bearer for self-hosted sites."
+help = "basic (default when an email is set) or bearer (default without an email); cookie, mtls and none also exist."
 kind = "choice"
-options = ["basic", "bearer"]
+options = ["basic", "bearer", "mtls", "cookie", "none"]

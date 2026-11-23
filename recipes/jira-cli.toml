@@ -29,7 +29,7 @@ jira version
 [[credential]]
 name = "jira"
 label = "Jira API token"
-help = "A personal access token (set Authentication to bearer on the Config tab)."
+help = "Jira Cloud: an Atlassian API token (Authentication basic, the default). Jira Data Center: a personal access token (Authentication bearer). The server URL and login are not read from variables; run `jira init` once."
 url = "https://id.atlassian.com/manage-profile/security/api-tokens"
 hosts = ["*.atlassian.net", "api.atlassian.com"]
 env = ["JIRA_API_TOKEN"]
@@ -37,7 +37,7 @@ env = ["JIRA_API_TOKEN"]
 [[config]]
 env = "JIRA_AUTH_TYPE"
 label = "Authentication"
-help = "Basic for Jira Cloud, bearer for a personal access token."
+help = "basic (the default) sends login and token; bearer sends a personal access token; mtls uses client certificates."
 kind = "choice"
 options = ["basic", "bearer", "mtls"]
 placeholder = "basic"

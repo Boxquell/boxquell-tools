@@ -34,20 +34,20 @@ BKT_ALLOW_INSECURE_STORE = "1"
 [[credential]]
 name = "bitbucket"
 label = "Bitbucket access token"
-help = "An access token for your workspace, repository or account."
-url = "https://bitbucket.org/account/settings/app-passwords/"
+help = "Cloud: an Atlassian API token with Bitbucket scopes (create it with scopes, app Bitbucket) used with your e-mail as User name (basic), or a repository, project or workspace access token (bearer). Data Center: a personal access token (bearer)."
+url = "https://id.atlassian.com/manage-profile/security/api-tokens"
 hosts = ["bitbucket.org", "api.bitbucket.org"]
 env = ["BKT_TOKEN"]
 
 [[config]]
 env = "BKT_WORKSPACE"
 label = "Workspace"
-help = "Workspace that commands use unless told otherwise."
+help = "Default Cloud workspace."
 
 [[config]]
 env = "BKT_PROJECT"
 label = "Project"
-help = "Project that commands use unless told otherwise."
+help = "Default Data Center project key."
 
 [[config]]
 env = "BKT_REPO"
@@ -57,11 +57,11 @@ help = "Repository that commands use unless told otherwise."
 [[config]]
 env = "BKT_USERNAME"
 label = "User name"
-help = "User name for basic authentication; Cloud API tokens need it."
+help = "For basic authentication; with a Cloud API token this is your Atlassian account e-mail."
 
 [[config]]
 env = "BKT_AUTH_METHOD"
 label = "Authentication"
-help = "Basic for Cloud, bearer for Data Center without a user name."
+help = "basic sends user name and token (Cloud default); bearer sends the token alone (Data Center default without a user name, and Cloud access tokens)."
 kind = "choice"
 options = ["basic", "bearer"]

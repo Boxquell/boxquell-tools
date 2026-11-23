@@ -23,7 +23,7 @@ NODE_PATH = "/usr/local/lib/node_modules"
 env = "DEBUG"
 label = "Debug logs"
 help = "Playwright logs to turn on."
-options = ["pw:api", "pw:browser", "pw:protocol"]
+options = ["pw:api"]
 
 [[config]]
 env = "PWDEBUG"

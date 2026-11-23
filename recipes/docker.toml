@@ -42,7 +42,7 @@ env = "BUILDKIT_PROGRESS"
 label = "Build output"
 help = "How docker build shows its progress."
 kind = "choice"
-options = ["auto", "plain", "tty"]
+options = ["auto", "plain", "tty", "rawjson"]
 placeholder = "auto"
 
 [[config]]
