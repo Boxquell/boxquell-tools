@@ -1,0 +1,11 @@
+name = "GitHub CLI"
+category = "tool"
+description = "`gh`, with github.com allowed for git and the API"
+install_allow = ["deb.debian.org", "security.debian.org"]
+allow = ["github.com", "api.github.com"]
+secrets = ["github"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends gh
+gh --version
+'''
