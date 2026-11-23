@@ -13,7 +13,7 @@ allow = ["*.amazonaws.com", "*.api.aws"]
 # (and AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN), preferably short-lived session credentials.
 install = '''
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -q
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip less groff-base
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl gnupg unzip less groff-base
 curl -fsSL https://awscli.amazonaws.com/v2/install.sh | sudo bash -s -- --system
 aws --version
 '''
