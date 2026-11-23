@@ -20,6 +20,16 @@ boxquell repo update tools          # fetch the latest recipes
 | `jq` | Command-line JSON processor |
 | `ripgrep` | Fast recursive search (`rg`) |
 
+## IDEs
+
+| Recipe | What it does |
+|---|---|
+| `code-server` | VS Code in the browser. Start it with `boxquell run mybox code-server`, then open http://127.0.0.1:8080 (forwarded on install). |
+| `vscode-remote` | Allows the hosts VS Code's Remote-SSH needs to install its server and extensions in the sandbox. |
+| `jetbrains-remote` | Allows the hosts JetBrains Gateway needs to install an IDE backend and plugins in the sandbox. |
+
+For the last two, run `boxquell ssh-config --install` once and connect the IDE to the ssh host `boxquell-<name>`.
+
 ## Docker in a sandbox
 
 The sandbox kernel has no NAT, so Docker runs without its own bridge. Give containers the sandbox's network:

@@ -1,0 +1,20 @@
+name = "code-server"
+category = "ide"
+description = "VS Code in the browser, served from the sandbox on port 8080"
+install_allow = ["github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+allow = ["open-vsx.org", "openvsxorg.blob.core.windows.net"]
+ports = [8080]
+# Only this computer can reach the forwarded port, so no password is asked for.
+command = "code-server --bind-addr 0.0.0.0:8080 --auth none --disable-telemetry --disable-update-check ."
+install = '''
+case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
+latest=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/coder/code-server/releases/latest)
+version=${latest##*/v}
+cd "$(mktemp -d)"
+curl -fsSLo code-server.tar.gz "https://github.com/coder/code-server/releases/download/v$version/code-server-$version-linux-$arch.tar.gz"
+sudo rm -rf /opt/code-server
+sudo mkdir -p /opt/code-server
+sudo tar -xzf code-server.tar.gz -C /opt/code-server --strip-components=1 --no-same-owner
+sudo ln -sf /opt/code-server/bin/code-server /usr/local/bin/code-server
+code-server --version | head -n1
+'''

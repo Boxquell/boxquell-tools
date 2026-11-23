@@ -1,0 +1,17 @@
+name = "VS Code Remote"
+category = "ide"
+description = "Opens the network for VS Code's Remote-SSH server and its extensions"
+allow = [
+    "update.code.visualstudio.com",
+    "vscode.download.prss.microsoft.com",
+    "main.vscode-cdn.net",
+    "marketplace.visualstudio.com",
+    "*.gallery.vsassets.io",
+    "*.gallerycdn.vsassets.io",
+]
+install = '''
+# VS Code installs its server itself when it first connects over ssh
+# (`boxquell ssh-config --install`, then connect to boxquell-<name>).
+# This recipe only allows the hosts that download needs.
+true
+'''

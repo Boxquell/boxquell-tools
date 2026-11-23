@@ -1,0 +1,18 @@
+name = "JetBrains Remote"
+category = "ide"
+description = "Opens the network for JetBrains Gateway to install its IDE backend and plugins"
+allow = [
+    "download.jetbrains.com",
+    "download-cdn.jetbrains.com",
+    "cache-redirector.jetbrains.com",
+    "data.services.jetbrains.com",
+    "plugins.jetbrains.com",
+    "resources.jetbrains.com",
+]
+install = '''
+# JetBrains Gateway installs the IDE backend itself when it first connects over ssh
+# (`boxquell ssh-config --install`, then connect to boxquell-<name>).
+# This recipe only allows the hosts that download needs. IDE backends want memory:
+# give the sandbox 8 GiB or more with `boxquell set <name> --ram 8192`.
+true
+'''
