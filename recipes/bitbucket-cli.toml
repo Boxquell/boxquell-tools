@@ -1,0 +1,31 @@
+name = "Bitbucket CLI"
+category = "tool"
+description = "`bkt` (avivsinai/bitbucket-cli) for Bitbucket Cloud; allow your workspace with a `bitbucket` secret that sets BKT_TOKEN"
+icon = "bitbucket.svg"
+os = ["debian", "ubuntu"]
+install_allow = ["@packages", "github.com", "*.githubusercontent.com"]
+allow = ["bitbucket.org", "*.bitbucket.org", "api.bitbucket.org"]
+secrets = ["bitbucket"]
+install = '''
+# Release binary from GitHub. Log in with `bkt auth login https://bitbucket.org --kind cloud --web-token`, or set
+# BKT_TOKEN and BKT_USERNAME (an Atlassian API token and its email); BKT_HOST is set below.
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl git
+case "$(uname -m)" in
+  x86_64) arch=x86_64 ;;
+  aarch64) arch=arm64 ;;
+  *) echo "unsupported CPU" >&2; exit 1 ;;
+esac
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/avivsinai/bitbucket-cli/releases/latest)
+tag=${tag##*/}
+cd "$(mktemp -d)"
+curl -fsSLO "https://github.com/avivsinai/bitbucket-cli/releases/download/$tag/bkt_${tag#v}_linux_${arch}.tar.gz"
+curl -fsSL "https://github.com/avivsinai/bitbucket-cli/releases/download/$tag/checksums.txt" | grep "bkt_${tag#v}_linux_${arch}.tar.gz\$" | sha256sum -c -
+tar -xzf "bkt_${tag#v}_linux_${arch}.tar.gz"
+sudo install -m 0755 "$(find . -name bkt -type f | head -n 1)" /usr/local/bin/bkt
+bkt --version
+'''
+
+[env]
+BKT_HOST = "https://bitbucket.org"
+BKT_ALLOW_INSECURE_STORE = "1"

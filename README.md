@@ -12,6 +12,7 @@ boxquell repo update tools          # fetch the latest recipes
 
 | Recipe | What it installs |
 |---|---|
+| `bitbucket-cli` | Bitbucket CLI (`bkt`) for Bitbucket Cloud |
 | `build-essential` | gcc, g++, make and pkg-config from Debian |
 | `composer` | Composer, the dependency manager for PHP (installs PHP from the languages repository) |
 | `confluence-cli` | Confluence CLI (`confluence`, from npm; installs Node.js from the languages repository) |
