@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: A problem with Boxquell itself
+    url: https://github.com/Boxquell/boxquell/issues/new/choose
+    about: The app, the command line, sandboxes, networking.
+  - name: Security vulnerability
+    url: https://github.com/Boxquell/boxquell/security/advisories/new
+    about: Report a way around a sandbox boundary privately.

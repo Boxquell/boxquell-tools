@@ -1,0 +1,15 @@
+name: Recipe request
+description: A recipe that should be added
+labels: [enhancement]
+body:
+  - type: input
+    id: which
+    attributes:
+      label: What should be added?
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: How is it installed, and which hosts does it need?
+      description: A link to its install instructions helps. Pull requests are welcome; the format is in the Boxquell docs.

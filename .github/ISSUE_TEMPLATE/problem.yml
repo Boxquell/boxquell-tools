@@ -1,0 +1,28 @@
+name: Recipe problem
+description: A recipe does not build, install or work
+labels: [bug]
+body:
+  - type: input
+    id: which
+    attributes:
+      label: Which recipe?
+      placeholder: "node"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: What boxquell printed, and for refused connections the lines from `boxquell logs <sandbox> --blocked`.
+      render: text
+  - type: input
+    id: system
+    attributes:
+      label: Boxquell version and the sandbox's operating system
+      placeholder: "boxquell 0.1.0, debian"
