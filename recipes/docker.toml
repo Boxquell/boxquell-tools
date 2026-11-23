@@ -1,0 +1,29 @@
+name = "Docker"
+category = "tool"
+description = "Docker Engine with Buildx and Compose; containers use the sandbox's network (`--network host`)"
+install_allow = ["deb.debian.org", "security.debian.org", "download.docker.com"]
+allow = ["registry-1.docker.io", "auth.docker.io", "production.cloudfront.docker.com"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl iptables
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+codename=$(. /etc/os-release && echo "$VERSION_CODENAME")
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $codename stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# The sandbox kernel has no NAT, so Docker runs without its own bridge: containers
+# share the sandbox's network and are held to the same network rules.
+sudo mkdir -p /etc/docker
+echo '{ "iptables": false, "ip6tables": false, "bridge": "none" }' | sudo tee /etc/docker/daemon.json >/dev/null
+sudo usermod -aG docker dev
+
+# Start the daemon now and on every boot of the sandbox.
+sudo mkdir -p /etc/boxquell/boot.d
+printf '%s\n' '#!/bin/sh' 'exec dockerd >/var/log/dockerd.log 2>&1' | sudo tee /etc/boxquell/boot.d/docker >/dev/null
+sudo chmod +x /etc/boxquell/boot.d/docker
+pgrep -x dockerd >/dev/null || sudo sh -c '/etc/boxquell/boot.d/docker &'
+for _ in $(seq 20); do sudo docker info >/dev/null 2>&1 && break; sleep 1; done
+sudo docker version --format 'Docker {{.Server.Version}}'
+'''
