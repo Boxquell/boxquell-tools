@@ -16,8 +16,8 @@ sudo chmod +x /etc/boxquell/boot.d/mariadb
 pgrep -x mariadbd >/dev/null || sudo /etc/boxquell/boot.d/mariadb
 for _ in $(seq 60); do sudo mariadb-admin ping >/dev/null 2>&1 && break; sleep 1; done
 
-# `dev` with all privileges, logging in over the local socket as the system user `dev`
-# (no password); the same account also works from 127.0.0.1 without one.
-sudo mariadb -e "CREATE DATABASE IF NOT EXISTS dev; CREATE USER IF NOT EXISTS 'dev'@'localhost' IDENTIFIED VIA unix_socket; CREATE USER IF NOT EXISTS 'dev'@'127.0.0.1' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON *.* TO 'dev'@'localhost' WITH GRANT OPTION; GRANT ALL PRIVILEGES ON *.* TO 'dev'@'127.0.0.1' WITH GRANT OPTION"
+# `dev` with all privileges and no password: the system user `dev` logs in over the local
+# socket, and any client on 127.0.0.1 (which MariaDB sees as `localhost`) may use the empty password.
+sudo mariadb -e "CREATE DATABASE IF NOT EXISTS dev; CREATE OR REPLACE USER 'dev'@'localhost' IDENTIFIED VIA unix_socket OR mysql_native_password USING PASSWORD(''); GRANT ALL PRIVILEGES ON *.* TO 'dev'@'localhost' WITH GRANT OPTION"
 mariadb --version
 '''
