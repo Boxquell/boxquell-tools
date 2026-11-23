@@ -4,7 +4,7 @@ description = "Helm, the Kubernetes package manager, from the Helm project's apt
 icon = "helm.svg"
 icon_color = "#0F1689"
 os = ["debian", "ubuntu"]
-install_allow = ["@packages", "packages.buildkite.com"]
+install_allow = ["@packages", "packages.buildkite.com", "d3fo0g5hm7lbuv.cloudfront.net"]
 # Chart repositories and OCI registries differ per project: allow the ones you use with `boxquell allow <box> <host>`.
 install = '''
 sudo apt-get update -q

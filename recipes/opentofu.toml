@@ -4,7 +4,7 @@ description = "OpenTofu (`tofu`) from the OpenTofu project's apt repository"
 icon = "opentofu.svg"
 icon_color = "#FFDA18"
 os = ["debian", "ubuntu"]
-install_allow = ["@packages", "get.opentofu.org", "packages.opentofu.org"]
+install_allow = ["@packages", "get.opentofu.org", "packages.opentofu.org", "d3fo0g5hm7lbuv.cloudfront.net"]
 # The registry; provider archives are fetched from the hosts it points to (mostly GitHub releases).
 allow = ["registry.opentofu.org", "github.com", "release-assets.githubusercontent.com"]
 install = '''

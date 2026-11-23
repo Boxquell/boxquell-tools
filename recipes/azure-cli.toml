@@ -14,7 +14,13 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 sudo mkdir -p /etc/apt/keyrings
 curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg >/dev/null
 sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
-printf '%s\n' "Types: deb" "URIs: https://packages.microsoft.com/repos/azure-cli/" "Suites: $(lsb_release -cs)" "Components: main" "Architectures: $(dpkg --print-architecture)" "Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources >/dev/null
+# Microsoft publishes the repository per release and lags behind new ones (no trixie yet); its
+# documentation says to use the newest earlier release then.
+suite=$(lsb_release -cs)
+if ! curl -fsSI "https://packages.microsoft.com/repos/azure-cli/dists/$suite/Release" >/dev/null; then
+  suite=$(. /etc/os-release && if [ "$ID" = debian ]; then echo bookworm; else echo jammy; fi)
+fi
+printf '%s\n' "Types: deb" "URIs: https://packages.microsoft.com/repos/azure-cli/" "Suites: $suite" "Components: main" "Architectures: $(dpkg --print-architecture)" "Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources >/dev/null
 sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends azure-cli
 az version --query '"azure-cli"' -o tsv
