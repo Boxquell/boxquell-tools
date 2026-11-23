@@ -15,7 +15,10 @@ tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/stripe/s
 tag=${tag##*/}
 base=https://github.com/stripe/stripe-cli/releases/download/$tag
 file=stripe_${tag#v}_linux_$arch.tar.gz
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLO "$base/$file"
 curl -fsSL "$base/stripe-linux-checksums.txt" | grep " $file\$" | sha256sum -c -
 sudo tar -xzf "$file" -C /usr/local/bin stripe --no-same-owner

@@ -8,7 +8,10 @@ install_allow = ["dl.k8s.io", "cdn.dl.k8s.io", "@packages"]
 # Cluster API servers differ per user: allow yours with `boxquell allow <box> <host>`.
 install = '''
 case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 version=$(curl -fsSL https://dl.k8s.io/release/stable.txt)
 curl -fsSLO "https://dl.k8s.io/release/$version/bin/linux/$arch/kubectl"
 curl -fsSLO "https://dl.k8s.io/release/$version/bin/linux/$arch/kubectl.sha256"

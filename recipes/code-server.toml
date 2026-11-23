@@ -13,7 +13,10 @@ install = '''
 case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64) arch=arm64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
 latest=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/coder/code-server/releases/latest)
 version=${latest##*/v}
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLo code-server.tar.gz "https://github.com/coder/code-server/releases/download/v$version/code-server-$version-linux-$arch.tar.gz"
 sudo rm -rf /opt/code-server
 sudo mkdir -p /opt/code-server

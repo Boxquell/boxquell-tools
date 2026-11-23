@@ -7,7 +7,10 @@ requires = ["php"]
 install_allow = ["composer.github.io", "getcomposer.org"]
 allow = ["repo.packagist.org", "packagist.org", "api.github.com", "codeload.github.com", "github.com"]
 install = '''
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 expected=$(curl -fsSL https://composer.github.io/installer.sig)
 curl -fsSLo composer-setup.php https://getcomposer.org/installer
 echo "$expected  composer-setup.php" | sha384sum -c -

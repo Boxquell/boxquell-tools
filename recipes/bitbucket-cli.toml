@@ -19,7 +19,10 @@ case "$(uname -m)" in
 esac
 tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/avivsinai/bitbucket-cli/releases/latest)
 tag=${tag##*/}
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLO "https://github.com/avivsinai/bitbucket-cli/releases/download/$tag/bkt_${tag#v}_linux_${arch}.tar.gz"
 curl -fsSL "https://github.com/avivsinai/bitbucket-cli/releases/download/$tag/checksums.txt" | grep "bkt_${tag#v}_linux_${arch}.tar.gz\$" | sha256sum -c -
 tar -xzf "bkt_${tag#v}_linux_${arch}.tar.gz"

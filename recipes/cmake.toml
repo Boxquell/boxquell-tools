@@ -14,7 +14,10 @@ case "$arch" in x86_64|aarch64) ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
 tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/Kitware/CMake/releases/latest)
 tag=${tag##*/}
 base=https://github.com/Kitware/CMake/releases/download/$tag
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLO "$base/cmake-${tag#v}-SHA-256.txt"
 curl -fsSLO "$base/cmake-${tag#v}-linux-$arch.sh"
 grep "cmake-${tag#v}-linux-$arch.sh\$" "cmake-${tag#v}-SHA-256.txt" | sha256sum -c -

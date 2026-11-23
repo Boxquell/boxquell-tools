@@ -15,7 +15,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommend
 
 # The latest release, checked against the SHA-256 that phpMyAdmin publishes next to it.
 version=$(curl -fsSL https://www.phpmyadmin.net/home_page/version.json | php -r 'echo json_decode(stream_get_contents(STDIN))->version;')
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 file=phpMyAdmin-$version-all-languages.tar.gz
 curl -fsSLO "https://files.phpmyadmin.net/phpMyAdmin/$version/$file"
 curl -fsSL "https://files.phpmyadmin.net/phpMyAdmin/$version/$file.sha256" | sha256sum -c -

@@ -12,7 +12,10 @@ case "$(uname -m)" in x86_64) arch=x86_64 ;; aarch64) arch=aarch64 ;; *) echo "u
 sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip
 tag=$(curl -fsSL https://dl.deno.land/release-latest.txt)
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLo deno.zip "https://dl.deno.land/release/$tag/deno-$arch-unknown-linux-gnu.zip"
 sudo unzip -qo deno.zip -d /usr/local/bin
 sudo chmod 0755 /usr/local/bin/deno

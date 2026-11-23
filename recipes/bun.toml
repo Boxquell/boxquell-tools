@@ -11,7 +11,10 @@ install = '''
 case "$(uname -m)" in x86_64) arch=x64 ;; aarch64) arch=aarch64 ;; *) echo "unsupported CPU" >&2; exit 1 ;; esac
 sudo apt-get update -q
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ca-certificates curl unzip
-cd "$(mktemp -d)"
+# Downloads go to the disk and are removed again, also when something fails.
+work=$(mktemp -d -p /var/tmp)
+trap 'rm -rf "$work"' EXIT
+cd "$work"
 curl -fsSLo bun.zip "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-$arch.zip"
 unzip -q bun.zip
 sudo install -m 0755 "bun-linux-$arch/bun" /usr/local/bin/bun
