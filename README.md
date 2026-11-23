@@ -12,18 +12,30 @@ boxquell repo update tools          # fetch the latest recipes
 
 | Recipe | What it installs |
 |---|---|
+| `bat` | A cat clone with syntax highlighting (`bat`) |
 | `bitbucket-cli` | Bitbucket CLI (`bkt`) for Bitbucket Cloud |
 | `build-essential` | gcc, g++, make and pkg-config from Debian |
 | `composer` | Composer, the dependency manager for PHP (installs PHP from the languages repository) |
 | `confluence-cli` | Confluence CLI (`confluence`, from npm; installs Node.js from the languages repository) |
 | `docker` | Docker Engine with Buildx and Compose (see below) |
+| `fd` | Fast, friendly alternative to find (`fd`) |
+| `ffmpeg` | FFmpeg and ffprobe for converting audio and video |
+| `fzf` | Command-line fuzzy finder |
 | `gh` | GitHub CLI, with github.com allowed for git and the API |
 | `git` | git with Git LFS |
 | `glab` | GitLab CLI, with gitlab.com allowed for git and the API |
+| `imagemagick` | ImageMagick command-line tools (`convert`, `identify`) |
 | `jira-cli` | Jira CLI (`jira`) for Jira Cloud |
 | `jq` | Command-line JSON processor |
+| `netlify` | Netlify CLI (`netlify`; installs Node.js from the languages repository); a `netlify` secret can carry NETLIFY_AUTH_TOKEN |
 | `playwright` | Playwright with headless Chromium and its system libraries (installs Node.js from the languages repository) |
 | `ripgrep` | Fast recursive search (`rg`) |
+| `sentry-cli` | Sentry CLI (`sentry-cli`); a `sentry` secret can carry SENTRY_AUTH_TOKEN |
+| `shellcheck` | Static analysis for shell scripts |
+| `stripe` | Stripe CLI (`stripe`), from Stripe's Debian repository |
+| `tmux` | Terminal multiplexer |
+| `vercel` | Vercel CLI (`vercel`; installs Node.js from the languages repository); a `vercel` secret can carry VERCEL_TOKEN |
+| `wrangler` | Wrangler, the Cloudflare Workers CLI (installs Node.js from the languages repository); a `cloudflare` secret can carry CLOUDFLARE_API_TOKEN |
 
 ## IDEs
 
