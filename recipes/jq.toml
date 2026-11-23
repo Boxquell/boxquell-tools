@@ -1,0 +1,9 @@
+name = "jq"
+category = "tool"
+description = "Command-line JSON processor"
+install_allow = ["deb.debian.org", "security.debian.org"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends jq
+jq --version
+'''

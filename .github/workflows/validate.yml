@@ -1,0 +1,42 @@
+name: Validate recipes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check every recipe file
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys, tomllib
+          required = {"name": str, "category": str, "description": str, "install": str}
+          lists = ["requires", "install_allow", "allow", "secrets", "versions"]
+          failed = False
+          for path in sorted(pathlib.Path("recipes").glob("*.toml")):
+              problems = []
+              if not re.fullmatch(r"[a-z0-9-]+", path.stem):
+                  problems.append("file name must use a-z, 0-9 and '-'")
+              try:
+                  recipe = tomllib.loads(path.read_text())
+              except tomllib.TOMLDecodeError as err:
+                  recipe, problems = {}, problems + [f"invalid TOML: {err}"]
+              for key, kind in required.items():
+                  if not isinstance(recipe.get(key), kind):
+                      problems.append(f"missing or wrong type: {key}")
+              if recipe.get("category") not in (None, "agent", "language", "tool", "ide"):
+                  problems.append("category must be agent, language, tool or ide")
+              for key in lists:
+                  value = recipe.get(key, [])
+                  if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+                      problems.append(f"{key} must be a list of strings")
+              print(("FAIL " if problems else "ok   ") + str(path))
+              for problem in problems:
+                  print("     " + problem)
+              failed = failed or bool(problems)
+          sys.exit(1 if failed else 0)
+          PY

@@ -1,0 +1,9 @@
+name = "ripgrep"
+category = "tool"
+description = "Fast recursive search (`rg`)"
+install_allow = ["deb.debian.org", "security.debian.org"]
+install = '''
+sudo apt-get update -q
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends ripgrep
+rg --version | head -n1
+'''
