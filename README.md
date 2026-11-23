@@ -22,6 +22,7 @@ boxquell repo update tools          # fetch the latest recipes
 | `glab` | GitLab CLI, with gitlab.com allowed for git and the API |
 | `jira-cli` | Jira CLI (`jira`) for Jira Cloud |
 | `jq` | Command-line JSON processor |
+| `playwright` | Playwright with headless Chromium and its system libraries (installs Node.js from the languages repository) |
 | `ripgrep` | Fast recursive search (`rg`) |
 
 ## IDEs

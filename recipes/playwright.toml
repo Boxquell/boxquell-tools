@@ -1,0 +1,19 @@
+name = "Playwright"
+category = "tool"
+description = "Playwright (`playwright`) with headless Chromium and its system libraries, for browser tests"
+icon = "playwright.svg"
+os = ["debian", "ubuntu"]
+requires = ["node"]
+install_allow = ["@packages", "registry.npmjs.org", "cdn.playwright.dev", "playwright.download.prss.microsoft.com", "playwright.azureedge.net"]
+install = '''
+# The browser lives in /usr/local/share/playwright so every user and session finds it.
+export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
+sudo npm install -g playwright
+sudo env PLAYWRIGHT_BROWSERS_PATH="$PLAYWRIGHT_BROWSERS_PATH" playwright install --with-deps chromium
+sudo chmod -R a+rX "$PLAYWRIGHT_BROWSERS_PATH"
+playwright --version
+'''
+
+[env]
+PLAYWRIGHT_BROWSERS_PATH = "/usr/local/share/playwright"
+NODE_PATH = "/usr/local/lib/node_modules"
